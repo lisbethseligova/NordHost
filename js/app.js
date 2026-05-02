@@ -141,20 +141,21 @@
   }
 
   // ---------------------------------------------------------------------------
-  // THEME TOGGLE — s persistencí přes localStorage
+  // THEME TOGGLE — light je default (ZonerCloud styl), dark je opt-in
+  // s persistencí přes localStorage
   // ---------------------------------------------------------------------------
   function toggleTheme() {
     const root = document.documentElement;
-    root.classList.toggle('light');
+    root.classList.toggle('dark');
     try {
-      localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
+      localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
     } catch (_) {}
   }
 
   function initTheme() {
     try {
       const saved = localStorage.getItem('theme');
-      if (saved === 'light') document.documentElement.classList.add('light');
+      if (saved === 'dark') document.documentElement.classList.add('dark');
     } catch (_) {}
   }
 
