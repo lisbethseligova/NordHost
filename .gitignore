@@ -10,3 +10,8 @@ Thumbs.db
 .env
 .env.local
 NOTES.md
+
+# Interní dokumentace, neveřejná — držíme lokálně, nikdy do gitu ani na web
+_saas-dokumentace/
+_internal/
+*.docx

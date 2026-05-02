@@ -3,968 +3,1068 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NordHost — Dedikované servery s plnou automatizací</title>
-  <meta name="description" content="Bare-metal výkon bez sdílení. Plný root, vlastní IP, ECC RAM, IPMI. Aktivace do 30 minut, SLA 99,9 %, datová centra v Praze a Frankfurtu.">
+  <title>NordHost — Dedikované servery z Mladé Boleslavi</title>
+  <meta name="description" content="Pronájem dedikovaných serverů s plnou automatizací. Bare-metal výkon, ECC RAM, IPMI, plný root. Aktivace do 30 minut, sídlo Mladá Boleslav.">
   <meta name="theme-color" content="#FFFFFF">
 
-  <!-- Open Graph -->
   <meta property="og:title" content="NordHost — Dedikované servery">
-  <meta property="og:description" content="Plně automatizovaný pronájem dedikovaných serverů. Aktivace do 30 minut, SLA 99,9 %.">
+  <meta property="og:description" content="Plně automatizovaný pronájem dedikovaných serverů z Mladé Boleslavi.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="cs_CZ">
 
-  <!-- Fonts: Space Grotesk (display) + Inter (body) + JetBrains Mono (code) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230091EA'/%3E%3Cpath d='M9 23V9h2.5l9 9.5V9H23v14h-2.5l-9-9.5V23H9z' fill='%23fff'/%3E%3C/svg%3E">
 
-  <!-- Favicon (inline SVG) -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%235B8AFE'/%3E%3Cstop offset='100%25' stop-color='%23B16EFE'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='%230A0E14'/%3E%3Cpath d='M9 23V9h2.5l9 9.5V9H23v14h-2.5l-9-9.5V23H9z' fill='url(%23g)'/%3E%3C/svg%3E">
+  <style>
+/* === RESET + BASE === */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.6;background:var(--bg);color:var(--fg);min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none;transition:color .15s}
+a:hover{color:var(--accent-hover)}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+::selection{background:var(--accent-soft)}
+
+/* === DESIGN TOKENS === */
+:root{
+  --bg:#FFFFFF;
+  --bg-muted:#F6F9FC;
+  --bg-elevated:#FFFFFF;
+  --fg:#0F172A;
+  --fg-soft:#475569;
+  --fg-mute:#94A3B8;
+  --border:#E2E8F0;
+  --border-soft:#EFF3F7;
+  --accent:#0091EA;
+  --accent-hover:#0077C2;
+  --accent-soft:rgba(0,145,234,.10);
+  --accent-glow:rgba(0,145,234,.18);
+  --cta:#10B981;
+  --cta-hover:#059669;
+  --cta-soft:rgba(16,185,129,.10);
+  --warning:#F59E0B;
+  --warning-soft:rgba(245,158,11,.10);
+  --danger:#DC2626;
+  --danger-soft:rgba(220,38,38,.08);
+  --success:#10B981;
+  --success-soft:rgba(16,185,129,.10);
+  --shadow-sm:0 1px 2px rgba(15,23,42,.05);
+  --shadow:0 4px 12px rgba(15,23,42,.06),0 1px 3px rgba(15,23,42,.04);
+  --shadow-lg:0 12px 28px rgba(15,23,42,.10),0 4px 8px rgba(15,23,42,.04);
+  --radius-sm:6px;
+  --radius:10px;
+  --radius-lg:14px;
+  --radius-pill:999px;
+  --container:1200px;
+  --nav-h:64px;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-5:24px; --space-6:32px; --space-7:48px; --space-8:72px; --space-9:96px;
+}
+:root.dark{
+  --bg:#0B1020;
+  --bg-muted:#10172A;
+  --bg-elevated:#141C30;
+  --fg:#E8EDF5;
+  --fg-soft:#94A3B8;
+  --fg-mute:#64748B;
+  --border:#1F2940;
+  --border-soft:#172238;
+  --accent:#3DA8FF;
+  --accent-hover:#5AB5FF;
+  --accent-soft:rgba(61,168,255,.14);
+  --accent-glow:rgba(61,168,255,.30);
+  --cta:#34D399;
+  --cta-hover:#10B981;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+  --shadow:0 4px 12px rgba(0,0,0,.35);
+  --shadow-lg:0 12px 28px rgba(0,0,0,.45);
+}
+
+/* === TYPOGRAPHY === */
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.02em;line-height:1.2;color:var(--fg)}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:var(--space-3)}
+.section-title{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-.025em;margin-bottom:var(--space-3)}
+.section-sub{color:var(--fg-soft);font-size:17px;max-width:680px;line-height:1.55;margin:0 auto var(--space-7)}
+.section-head{text-align:center;margin-bottom:var(--space-7)}
+
+/* === LAYOUT === */
+.container{max-width:var(--container);margin:0 auto;padding:0 var(--space-5)}
+.section{padding:var(--space-9) 0}
+.section.muted{background:var(--bg-muted)}
+
+/* === NAVBAR === */
+.nav{position:sticky;top:0;z-index:100;height:var(--nav-h);background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(16px);-webkit-backdrop-filter:saturate(180%) blur(16px);border-bottom:1px solid var(--border-soft)}
+:root.dark .nav{background:rgba(11,16,32,.85)}
+.nav>.container{height:100%;display:flex;align-items:center;justify-content:space-between;gap:var(--space-5)}
+.logo{font-size:20px;font-weight:800;letter-spacing:-.025em;cursor:pointer;color:var(--fg)}
+.logo span{color:var(--accent)}
+.nav-links{display:flex;gap:var(--space-6);list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:var(--fg-soft);transition:color .15s}
+.nav-links a:hover{color:var(--accent)}
+.nav-actions{display:flex;gap:var(--space-3);align-items:center}
+@media (max-width:760px){.nav-links{display:none}}
+
+/* === BUTTONS === */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;font-size:14px;font-weight:600;border-radius:var(--radius);border:1px solid transparent;transition:all .2s;white-space:nowrap;text-decoration:none}
+.btn-sm{padding:7px 14px;font-size:13px;border-radius:var(--radius-sm)}
+.btn-lg{padding:14px 28px;font-size:15px}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:var(--shadow-sm)}
+.btn-primary:hover{background:var(--accent-hover);color:#fff;box-shadow:var(--shadow);transform:translateY(-1px)}
+.btn-cta{background:var(--cta);color:#fff;box-shadow:var(--shadow-sm)}
+.btn-cta:hover{background:var(--cta-hover);color:#fff;box-shadow:var(--shadow);transform:translateY(-1px)}
+.btn-outline{background:var(--bg);color:var(--fg);border-color:var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-ghost{background:transparent;color:var(--fg-soft)}
+.btn-ghost:hover{color:var(--accent);background:var(--bg-muted)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-danger:hover{background:#B91C1C;color:#fff}
+.btn[disabled],.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* Pill icon button (theme/lang) */
+.icon-btn{width:36px;height:36px;border-radius:var(--radius-pill);border:1px solid var(--border);background:var(--bg);color:var(--fg-soft);display:inline-flex;align-items:center;justify-content:center;font-size:14px;transition:all .15s}
+.icon-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Dropdown */
+.dropdown{position:relative}
+.dropdown-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;min-width:180px;padding:6px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-lg);z-index:1000}
+.dropdown.open .dropdown-menu{display:block}
+.dropdown-item{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border-radius:var(--radius-sm);font-size:13px;color:var(--fg);text-align:left;cursor:pointer;transition:background .15s}
+.dropdown-item:hover{background:var(--bg-muted)}
+.dropdown-item.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.dropdown-label{padding:6px 10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-mute)}
+
+/* === SCREENS (SPA states) === */
+.screen{display:none}
+.screen.active{display:block;animation:fadeIn .25s ease-out}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* === HERO === */
+.hero{position:relative;background:linear-gradient(180deg,var(--bg-muted) 0%,var(--bg) 100%);padding:var(--space-9) 0 var(--space-8);overflow:hidden}
+.hero::before{content:"";position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:1100px;height:600px;background:radial-gradient(ellipse,var(--accent-glow) 0%,transparent 60%);pointer-events:none;opacity:.5}
+.hero>.container{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr 1fr;gap:var(--space-7);align-items:center}
+@media (max-width:900px){.hero>.container{grid-template-columns:1fr}}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.05em;border-radius:var(--radius-pill);margin-bottom:var(--space-4)}
+.hero-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--success);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.4}}
+.hero h1{font-size:clamp(36px,5.5vw,56px);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:var(--space-4)}
+.hero h1 span{color:var(--accent)}
+.hero p.lead{font-size:18px;color:var(--fg-soft);margin-bottom:var(--space-5);max-width:560px;line-height:1.55}
+.hero-actions{display:flex;gap:var(--space-3);flex-wrap:wrap;margin-bottom:var(--space-5)}
+.hero-trust{display:flex;gap:var(--space-5);font-size:13px;color:var(--fg-soft);flex-wrap:wrap}
+.hero-trust span{display:inline-flex;align-items:center;gap:6px}
+.hero-trust span::before{content:"✓";color:var(--success);font-weight:700}
+
+/* Hero side card (Top server preview) */
+.hero-side{position:relative}
+.hero-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-lg)}
+.hero-card-tag{display:inline-block;padding:3px 10px;background:var(--cta-soft);color:var(--cta);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-radius:var(--radius-pill);margin-bottom:var(--space-3)}
+.hero-card-name{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:var(--space-1)}
+.hero-card-desc{font-size:13px;color:var(--fg-soft);margin-bottom:var(--space-4)}
+.hero-card-specs{list-style:none;border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:var(--space-3) 0;margin-bottom:var(--space-4)}
+.hero-card-specs li{display:flex;justify-content:space-between;padding:4px 0;font-size:13px}
+.hero-card-specs li span:first-child{color:var(--fg-mute)}
+.hero-card-specs li span:last-child{font-weight:600}
+.hero-card-price{display:flex;align-items:baseline;gap:6px;margin-bottom:var(--space-4)}
+.hero-card-price-amt{font-size:34px;font-weight:800;color:var(--accent);letter-spacing:-.025em}
+.hero-card-price-per{font-size:13px;color:var(--fg-mute)}
+
+/* === TOP 3 PRICING === */
+.top3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5);align-items:stretch}
+@media (max-width:900px){.top3{grid-template-columns:1fr}}
+.top3-card{position:relative;padding:var(--space-6);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);display:flex;flex-direction:column;transition:all .2s}
+.top3-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow-lg)}
+.top3-card.featured{border-color:var(--accent);box-shadow:0 8px 32px var(--accent-glow);transform:scale(1.03)}
+@media (max-width:900px){.top3-card.featured{transform:none}}
+.top3-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:5px 14px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:var(--radius-pill);white-space:nowrap}
+.top3-name{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+.top3-tag{font-size:13px;color:var(--fg-soft);margin-bottom:var(--space-4);min-height:36px}
+.top3-price{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+.top3-amt{font-size:36px;font-weight:800;letter-spacing:-.025em;color:var(--accent)}
+.top3-per{font-size:14px;color:var(--fg-mute)}
+.top3-vat{font-size:11px;color:var(--fg-mute);margin-bottom:var(--space-5)}
+.top3-features{list-style:none;margin-bottom:var(--space-5);flex:1}
+.top3-features li{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:14px;border-bottom:1px dashed var(--border-soft)}
+.top3-features li:last-child{border-bottom:0}
+.top3-features li::before{content:"✓";color:var(--success);font-weight:700}
+
+/* === USP GRID === */
+.usp{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5);margin-top:var(--space-5)}
+@media (max-width:900px){.usp{grid-template-columns:1fr}}
+.usp-item{padding:var(--space-6);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);transition:all .2s}
+.usp-item:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:var(--shadow)}
+.usp-icon{width:44px;height:44px;border-radius:var(--radius);background:var(--accent-soft);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:var(--space-4)}
+.usp-item h3{font-size:17px;margin-bottom:8px}
+.usp-item p{font-size:14px;color:var(--fg-soft);line-height:1.6}
+
+/* === SERVICES GRID (8 karet) === */
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin-top:var(--space-5)}
+@media (max-width:1100px){.services{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:800px){.services{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:500px){.services{grid-template-columns:1fr}}
+.svc{position:relative;padding:var(--space-5);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);transition:all .2s;display:flex;flex-direction:column;min-height:200px;text-decoration:none;color:inherit}
+.svc.active{cursor:pointer}
+.svc.active:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow-lg);text-decoration:none;color:inherit}
+.svc.coming{opacity:.78}
+.svc.coming:hover{opacity:1;border-color:var(--border)}
+.svc-icon{width:40px;height:40px;border-radius:var(--radius);background:var(--accent-soft);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:var(--space-3)}
+.svc h3{font-size:16px;margin-bottom:6px}
+.svc p{font-size:13px;color:var(--fg-soft);line-height:1.55;flex:1;margin-bottom:var(--space-3)}
+.svc-foot{font-size:13px;font-weight:600;color:var(--accent)}
+.svc.coming .svc-foot{color:var(--fg-mute)}
+.coming-badge{position:absolute;top:var(--space-3);right:var(--space-3);padding:3px 10px;background:var(--warning-soft);color:var(--warning);font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:var(--radius-pill)}
+
+/* === STEPS === */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5)}
+@media (max-width:900px){.steps{grid-template-columns:1fr}}
+.step{padding:var(--space-6);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);text-align:center;transition:all .2s}
+.step:hover{border-color:var(--accent);box-shadow:var(--shadow)}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;background:var(--accent);color:#fff;font-size:16px;font-weight:800;border-radius:50%;margin-bottom:var(--space-4)}
+.step h3{font-size:17px;margin-bottom:8px}
+.step p{font-size:14px;color:var(--fg-soft)}
+
+/* === DATACENTERS === */
+.dc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5)}
+@media (max-width:900px){.dc-grid{grid-template-columns:1fr}}
+.dc-card{padding:var(--space-6);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);transition:all .2s}
+.dc-card:hover{border-color:var(--accent);box-shadow:var(--shadow)}
+.dc-card.hq{border-color:var(--cta-soft);background:linear-gradient(180deg,var(--cta-soft) 0%,var(--bg-elevated) 50%)}
+.dc-flag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:8px}
+.dc-card.hq .dc-flag{color:var(--cta)}
+.dc-card h3{font-size:20px;margin-bottom:8px}
+.dc-card p{font-size:14px;color:var(--fg-soft);margin-bottom:var(--space-4)}
+.dc-meta{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);border-top:1px solid var(--border-soft);padding-top:var(--space-3)}
+.dc-mlbl{font-size:11px;color:var(--fg-mute);font-weight:500}
+.dc-mval{font-size:13px;font-weight:600}
+
+/* === FAQ === */
+.faq{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.faq-q{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .15s}
+.faq-q:hover{border-color:var(--accent)}
+.faq-q[open]{border-color:var(--accent);box-shadow:var(--shadow-sm)}
+.faq-q summary{cursor:pointer;padding:16px 20px;font-weight:600;font-size:15px;list-style:none;display:flex;justify-content:space-between;align-items:center;user-select:none}
+.faq-q summary::-webkit-details-marker{display:none}
+.faq-q summary::after{content:"+";font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--accent);transition:transform .2s;margin-left:var(--space-3)}
+.faq-q[open] summary::after{transform:rotate(45deg)}
+.faq-a{padding:0 20px 18px;color:var(--fg-soft);font-size:14px;line-height:1.65}
+
+/* === FINAL CTA === */
+.cta-block{text-align:center;padding:var(--space-8) var(--space-5);background:var(--accent);border-radius:var(--radius-lg);color:#fff}
+.cta-block h2{color:#fff;font-size:clamp(28px,4vw,40px);margin-bottom:var(--space-3)}
+.cta-block p{font-size:17px;color:rgba(255,255,255,.92);max-width:540px;margin:0 auto var(--space-5)}
+.cta-block .btn-cta{background:#fff;color:var(--accent)}
+.cta-block .btn-cta:hover{background:#F5F8FB;color:var(--accent)}
+.cta-block .btn-outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.cta-block .btn-outline:hover{background:rgba(255,255,255,.12);color:#fff;border-color:#fff}
+
+/* === FOOTER === */
+.foot{background:var(--bg-muted);border-top:1px solid var(--border-soft);padding:var(--space-7) 0 var(--space-4);font-size:13px;color:var(--fg-mute);margin-top:var(--space-9)}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-6);margin-bottom:var(--space-6)}
+@media (max-width:800px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:500px){.foot-grid{grid-template-columns:1fr}}
+.foot-brand{font-size:13px;color:var(--fg-soft);max-width:320px;margin-top:var(--space-3)}
+.foot-addr{margin-top:var(--space-3);font-size:12px}
+.foot-addr strong{color:var(--fg-soft)}
+.foot-col h4{font-size:13px;font-weight:700;color:var(--fg);margin-bottom:var(--space-3)}
+.foot-col ul{list-style:none}
+.foot-col li{margin-bottom:6px}
+.foot-col a{color:var(--fg-soft);font-size:13px}
+.foot-col a:hover{color:var(--accent)}
+.foot-bot{padding-top:var(--space-4);border-top:1px solid var(--border-soft);display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--space-3);font-size:12px;color:var(--fg-mute)}
+
+/* === CATALOG === */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:var(--space-5)}
+.cat-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-6);transition:all .2s;display:flex;flex-direction:column}
+.cat-card:not(.sold):hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow-lg);cursor:pointer}
+.cat-card.sold{opacity:.55;cursor:not-allowed}
+.cat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-4)}
+.cat-name{font-size:19px;font-weight:800;letter-spacing:-.01em}
+.cat-specs{display:grid;gap:8px;margin-bottom:var(--space-5);padding:var(--space-4);background:var(--bg-muted);border-radius:var(--radius)}
+.cat-spec{display:flex;justify-content:space-between;font-size:13px}
+.cat-spec-l{color:var(--fg-mute);font-size:12px;font-weight:500}
+.cat-spec-v{color:var(--fg);font-weight:600;font-size:13px;text-align:right}
+.cat-foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:var(--space-4);border-top:1px solid var(--border-soft)}
+.cat-price{font-size:22px;font-weight:800}
+.cat-price span{font-size:13px;color:var(--fg-mute);font-weight:500}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.badge-ok{background:var(--success-soft);color:var(--success)}
+.badge-warn{background:var(--warning-soft);color:var(--warning)}
+.badge-bad{background:var(--danger-soft);color:var(--danger)}
+
+/* === DETAIL === */
+.detail-back{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--fg-soft);margin-bottom:var(--space-5)}
+.detail-back:hover{color:var(--accent)}
+.detail-grid{display:grid;grid-template-columns:1fr 380px;gap:var(--space-7);align-items:start}
+@media (max-width:900px){.detail-grid{grid-template-columns:1fr}}
+.spec-tbl{width:100%;border-collapse:collapse;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-top:var(--space-5)}
+.spec-tbl tr+tr{border-top:1px solid var(--border-soft)}
+.spec-tbl td{padding:14px 18px;font-size:14px}
+.spec-tbl td:first-child{width:40%;color:var(--fg-mute);font-size:13px;font-weight:500}
+.spec-tbl td:last-child{font-weight:500}
+.price-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-6);position:sticky;top:calc(var(--nav-h) + var(--space-4));box-shadow:var(--shadow)}
+.price-name{font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px}
+.price-sub{font-size:13px;color:var(--fg-mute);margin-bottom:var(--space-5)}
+.price-amt{font-size:36px;font-weight:800;letter-spacing:-.025em;color:var(--accent);margin-bottom:4px}
+.price-amt span{font-size:14px;color:var(--fg-mute);font-weight:500}
+.price-orig{font-size:13px;color:var(--fg-mute);text-decoration:line-through;margin-bottom:var(--space-5);min-height:18px}
+.period-sel{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:var(--space-5)}
+@media (max-width:720px){.period-sel{grid-template-columns:repeat(2,1fr)}}
+.period-btn{padding:10px 8px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-weight:600;color:var(--fg-soft);transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:2px}
+.period-btn:hover{border-color:var(--accent);color:var(--accent)}
+.period-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.period-disc{font-size:10px;color:var(--success);font-weight:700}
+
+/* === CHECKOUT === */
+.co-grid{display:grid;grid-template-columns:1fr 380px;gap:var(--space-7)}
+@media (max-width:900px){.co-grid{grid-template-columns:1fr}}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-4)}
+@media (max-width:600px){.fr{grid-template-columns:1fr}}
+.fg{display:flex;flex-direction:column}
+.fl{font-size:13px;color:var(--fg);margin-bottom:6px;font-weight:600}
+.opt{color:var(--fg-mute);font-weight:400}
+.fg input,.fg select{padding:11px 14px;font-family:inherit;font-size:14px;background:var(--bg);color:var(--fg);border:1px solid var(--border);border-radius:var(--radius)}
+.fg input:focus,.fg select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.fg input::placeholder{color:var(--fg-mute)}
+.co-agree{display:flex;gap:10px;align-items:flex-start;margin:var(--space-5) 0;padding:var(--space-4);background:var(--bg-muted);border-radius:var(--radius);font-size:13px;color:var(--fg-soft)}
+.co-agree input{margin-top:2px;accent-color:var(--accent);width:16px;height:16px;flex-shrink:0}
+.summary{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-6);position:sticky;top:calc(var(--nav-h) + var(--space-4))}
+.summary h3{font-size:16px;margin-bottom:var(--space-4);padding-bottom:var(--space-3);border-bottom:1px solid var(--border-soft)}
+.sum-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:14px}
+.sum-row .l{color:var(--fg-soft);font-size:13px}
+.sum-row.total{margin-top:var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--border-soft);font-size:18px;font-weight:800}
+
+/* === PENDING + CONFIRMED === */
+.center{text-align:center;max-width:520px;margin:0 auto;padding:var(--space-9) var(--space-5)}
+.spinner{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .9s linear infinite;margin:0 auto var(--space-5)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.check{width:72px;height:72px;border-radius:50%;background:var(--cta);color:#fff;font-size:36px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;margin-bottom:var(--space-5);box-shadow:0 8px 24px rgba(16,185,129,.3);animation:pop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+.center h2{font-size:28px;margin-bottom:var(--space-3)}
+.center p{color:var(--fg-soft);margin-bottom:var(--space-5)}
+.confirmed-box{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-5);text-align:left;margin-bottom:var(--space-5)}
+
+/* === PORTAL === */
+#portal{display:none;min-height:100vh;background:var(--bg-muted)}
+.psb{width:240px;background:var(--bg);border-right:1px solid var(--border);padding:var(--space-4);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0}
+.psb-logo{font-size:18px;font-weight:800;letter-spacing:-.02em;padding:0 12px var(--space-4);border-bottom:1px solid var(--border-soft)}
+.psb-logo span{color:var(--accent)}
+.psb-nav{list-style:none;margin-top:var(--space-4);flex:1;display:flex;flex-direction:column;gap:2px}
+.psb-nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius-sm);font-size:14px;color:var(--fg-soft);transition:all .15s}
+.psb-nav a:hover{background:var(--bg-muted);color:var(--accent)}
+.psb-nav a.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.psb-bot{margin-top:auto}
+.psb-user{display:flex;align-items:center;gap:10px;padding:10px;border-radius:var(--radius);background:var(--bg-muted);margin-bottom:var(--space-3)}
+.psb-avatar{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.psb-uname{font-size:13px;font-weight:600}
+.psb-uco{font-size:11px;color:var(--fg-mute)}
+.pmain{margin-left:240px;padding:var(--space-7) var(--space-6);min-width:0}
+@media (max-width:900px){.psb{display:none}.pmain{margin-left:0;padding:var(--space-5)}}
+.ptop{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-6);flex-wrap:wrap;gap:var(--space-3)}
+.ptop h1{font-size:24px;font-weight:800}
+.dash{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-5);box-shadow:var(--shadow-sm)}
+.dash-h{display:flex;align-items:center;gap:10px;margin-bottom:var(--space-4)}
+.dash-name{font-size:20px;font-weight:800}
+.dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4);padding:var(--space-3) 0;margin-bottom:var(--space-4);border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft)}
+@media (max-width:700px){.dash-stats{grid-template-columns:1fr}}
+.dash-l{font-size:11px;color:var(--fg-mute);font-weight:500;margin-bottom:2px}
+.dash-v{font-size:16px;font-weight:600}
+.dash-acts{display:flex;gap:10px;flex-wrap:wrap}
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:var(--space-5);gap:8px}
+.tab-btn{padding:10px 16px;font-size:14px;color:var(--fg-soft);border-bottom:2px solid transparent;margin-bottom:-1px;font-weight:600}
+.tab-btn:hover{color:var(--accent)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-c{display:none}
+.tab-c.active{display:block;animation:fadeIn .2s}
+.cred{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;flex-wrap:wrap}
+.cred-l{font-size:13px;color:var(--fg-soft);min-width:110px}
+.cred-v{flex:1;font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--bg-muted);padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border-soft)}
+input.cred-v{font-family:'JetBrains Mono',monospace}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}
+@media (max-width:800px){.acts{grid-template-columns:1fr}}
+.act{padding:var(--space-5);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg)}
+.act h4{font-size:16px;margin-bottom:8px}
+.act p{font-size:13px;color:var(--fg-soft);margin-bottom:var(--space-3);line-height:1.6}
+.act select{padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--fg);font-size:13px;font-family:inherit}
+.confirm-d{display:none;margin-top:var(--space-3);padding:var(--space-3);background:var(--danger-soft);border:1px solid rgba(220,38,38,.2);border-radius:var(--radius);font-size:13px}
+.confirm-d.show{display:block}
+.confirm-d p{margin-bottom:var(--space-3);color:var(--fg)}
+.inline-msg{display:none;margin-top:var(--space-3);padding:10px var(--space-3);background:var(--success-soft);border:1px solid rgba(16,185,129,.2);border-radius:var(--radius);font-size:13px;color:var(--success)}
+.inline-msg.show{display:block}
+.inv-tbl{width:100%;border-collapse:collapse;font-size:14px}
+.inv-tbl thead th{text-align:left;padding:14px 18px;background:var(--bg-muted);font-size:12px;font-weight:700;color:var(--fg-soft);border-bottom:1px solid var(--border-soft)}
+.inv-tbl td{padding:14px 18px;border-bottom:1px solid var(--border-soft)}
+.inv-tbl tbody tr:hover{background:var(--bg-muted)}
+.inv-tbl tbody tr:last-child td{border-bottom:0}
+.inv-num,.inv-amt{font-family:'JetBrains Mono',monospace;font-size:13px}
+.inv-amt{font-weight:700}
+  </style>
 </head>
 <body>
 
-  <!-- =========================================================================
-       PUBLIC NAVBAR
-       ========================================================================= -->
-  <nav class="navbar" id="public-nav">
+<!-- ===== NAVBAR ===== -->
+<nav class="nav" id="public-nav">
+  <div class="container">
+    <div class="logo" onclick="NH.show('landing')">Nord<span>Host</span></div>
+    <ul class="nav-links">
+      <li><a href="#" onclick="NH.show('catalog');return false">Servery</a></li>
+      <li><a href="#how">Jak to funguje</a></li>
+      <li><a href="#dc">Datová centra</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+    </ul>
+    <div class="nav-actions">
+      <!-- Lang -->
+      <div class="dropdown" id="dd-lang">
+        <button class="icon-btn" onclick="NH.toggleDD('dd-lang')" aria-label="Jazyk"><span data-lang-label>CS</span></button>
+        <div class="dropdown-menu">
+          <div class="dropdown-label">Jazyk</div>
+          <button class="dropdown-item" data-lang="cs" onclick="NH.setLang('cs')">🇨🇿 Čeština</button>
+          <button class="dropdown-item" data-lang="en" onclick="NH.setLang('en')">🇬🇧 English</button>
+          <button class="dropdown-item" data-lang="de" onclick="NH.setLang('de')">🇩🇪 Deutsch</button>
+        </div>
+      </div>
+      <!-- Theme -->
+      <button class="icon-btn" onclick="NH.toggleMode()" title="Přepnout motiv" aria-label="Přepnout motiv">◐</button>
+      <button class="btn btn-outline btn-sm" onclick="NH.showPortal('dash')">Přihlásit se</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== LANDING ===== -->
+<section id="screen-landing" class="screen active">
+
+  <!-- HERO -->
+  <div class="hero">
     <div class="container">
-      <div class="navbar-logo" onclick="window.NH.showScreen('landing')">Nord<span>Host</span></div>
-      <ul class="navbar-links">
-        <li><a href="#" onclick="window.NH.showScreen('catalog'); return false;">Servery</a></li>
-        <li><a href="#how-it-works" onclick="window.NH.showScreen('landing'); return true;">Jak to funguje</a></li>
-        <li><a href="#datacenters" onclick="window.NH.showScreen('landing'); return true;">Datová centra</a></li>
-        <li><a href="#faq" onclick="window.NH.showScreen('landing'); return true;">FAQ</a></li>
-      </ul>
-      <div class="navbar-actions">
-        <!-- Device indicator -->
-        <div class="device-indicator" id="device-indicator" title="Zařízení">🖥</div>
-
-        <!-- Language picker -->
-        <div class="picker" id="picker-lang">
-          <button class="picker-btn" onclick="window.NH.togglePicker('picker-lang')" aria-label="Změnit jazyk" title="Jazyk">
-            <span data-lang-label>CS</span>
-          </button>
-          <div class="picker-menu">
-            <div class="picker-section-label">Jazyk</div>
-            <button class="picker-item" data-lang="cs" onclick="window.NH.setLang('cs')"><span class="picker-item-swatch swatch-cs"></span> Čeština</button>
-            <button class="picker-item" data-lang="en" onclick="window.NH.setLang('en')"><span class="picker-item-swatch swatch-en"></span> English</button>
-            <button class="picker-item" data-lang="de" onclick="window.NH.setLang('de')"><span class="picker-item-swatch swatch-de"></span> Deutsch</button>
-          </div>
+      <div class="hero-left">
+        <span class="hero-badge">Sídlíme v Mladé Boleslavi · Datová centra Praha + Frankfurt</span>
+        <h1>Dedikované servery <span>bez kompromisů</span></h1>
+        <p class="lead">Pronájem výkonných bare-metal serverů s plnou automatizací. Plný root, ECC RAM, IPMI v ceně. Aktivace do 30 minut po platbě.</p>
+        <div class="hero-actions">
+          <a class="btn btn-cta btn-lg" href="#" onclick="NH.show('catalog');return false">Vybrat server →</a>
+          <a class="btn btn-outline btn-lg" href="#how">Jak to funguje</a>
         </div>
-
-        <!-- Theme picker -->
-        <div class="picker" id="picker-theme">
-          <button class="picker-btn" onclick="window.NH.togglePicker('picker-theme')" aria-label="Změnit motiv" title="Motiv">◐</button>
-          <div class="picker-menu">
-            <div class="picker-section-label">Režim</div>
-            <button class="picker-item" data-theme-mode="light" onclick="window.NH.setMode('light')"><span class="picker-item-swatch swatch-light"></span> Světlý</button>
-            <button class="picker-item" data-theme-mode="dark" onclick="window.NH.setMode('dark')"><span class="picker-item-swatch swatch-dark"></span> Tmavý</button>
-            <div class="picker-divider"></div>
-            <div class="picker-section-label">Barva</div>
-            <button class="picker-item" data-theme-brand="blue" onclick="window.NH.setBrand('blue')"><span class="picker-item-swatch swatch-blue"></span> Modrá</button>
-            <button class="picker-item" data-theme-brand="green" onclick="window.NH.setBrand('green')"><span class="picker-item-swatch swatch-green"></span> Zelená</button>
-            <button class="picker-item" data-theme-brand="purple" onclick="window.NH.setBrand('purple')"><span class="picker-item-swatch swatch-purple"></span> Fialová</button>
-          </div>
+        <div class="hero-trust">
+          <span>SLA 99,9 %</span>
+          <span>Aktivace ≤ 30 min</span>
+          <span>Český support 24/7</span>
         </div>
-
-        <button class="btn btn-outline btn-sm" onclick="window.NH.showPortal('portal-dashboard')">Přihlásit se</button>
       </div>
-    </div>
-  </nav>
-
-  <!-- =========================================================================
-       SCREEN: LANDING
-       ========================================================================= -->
-  <section id="screen-landing" class="screen active">
-
-    <!-- Hero CAROUSEL (rotující tabule) -->
-    <div class="hero-carousel">
-      <button class="hero-arrow prev" onclick="window.NH.carouselPrev()" aria-label="Předchozí">‹</button>
-      <button class="hero-arrow next" onclick="window.NH.carouselNext()" aria-label="Další">›</button>
-
-      <div class="container">
-        <div class="hero-carousel-track">
-          <!-- Slide 1: Dedikované servery -->
-          <div class="hero-slide active">
-            <div class="hero-slide-inner">
-              <div class="hero-slide-content">
-                <span class="hero-slide-tagline">Dedikované servery</span>
-                <h2>Bare-metal výkon<br>bez <span>kompromisů</span></h2>
-                <p>Plný root, ECC RAM a IPMI v ceně. 5 konfigurací od 1 990 Kč/měs. Aktivace do 30 minut po platbě.</p>
-                <div class="hero-slide-actions">
-                  <button class="btn btn-primary hero-cta" onclick="window.NH.showScreen('catalog')">Prohlédnout servery →</button>
-                  <a class="btn btn-outline hero-cta" href="#how-it-works">Jak to funguje</a>
-                </div>
-              </div>
-              <div class="hero-slide-visual">
-                <span class="hero-slide-icon">⛁</span>
-              </div>
-            </div>
+      <div class="hero-side">
+        <div class="hero-card">
+          <span class="hero-card-tag">Nejprodávanější</span>
+          <div class="hero-card-name">DS-PRO</div>
+          <div class="hero-card-desc">Produkční nasazení a databáze</div>
+          <ul class="hero-card-specs">
+            <li><span>CPU</span><span>Xeon E-2388G 8C/16T</span></li>
+            <li><span>RAM</span><span>64 GB DDR4 ECC</span></li>
+            <li><span>Disk</span><span>2× 1 TB NVMe RAID 1</span></li>
+            <li><span>Síť</span><span>1 Gbps + 2× IPv4</span></li>
+          </ul>
+          <div class="hero-card-price">
+            <span class="hero-card-price-amt">3 490</span>
+            <span class="hero-card-price-per">Kč / měs. bez DPH</span>
           </div>
-
-          <!-- Slide 2: Akce — sleva při ročním placení -->
-          <div class="hero-slide">
-            <div class="hero-slide-inner">
-              <div class="hero-slide-content">
-                <span class="hero-slide-tagline">Akce na rok</span>
-                <h2>Roční pronájem se <span>slevou 15 %</span></h2>
-                <p>Při zaplacení dvanácti měsíců dopředu ušetříte 15 % a získáte garanci ceny po celou dobu pronájmu.</p>
-                <div class="hero-slide-actions">
-                  <button class="btn btn-primary hero-cta" onclick="window.NH.showScreen('catalog')">Vybrat konfiguraci →</button>
-                </div>
-              </div>
-              <div class="hero-slide-visual">
-                <span class="hero-slide-icon">%</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 3: Frankfurt DE -->
-          <div class="hero-slide">
-            <div class="hero-slide-inner">
-              <div class="hero-slide-content">
-                <span class="hero-slide-tagline">Nová lokace</span>
-                <h2>Frankfurt DE — <span>nyní dostupný</span></h2>
-                <p>Druhá lokace pro evropskou latenci. Equinix FR5, Tier III+, peering DE-CIX a AMS-IX. Ideální pro DACH a širší Evropu.</p>
-                <div class="hero-slide-actions">
-                  <button class="btn btn-primary hero-cta" onclick="window.NH.showScreen('catalog')">Prohlédnout servery →</button>
-                  <a class="btn btn-outline hero-cta" href="#datacenters">O datových centrech</a>
-                </div>
-              </div>
-              <div class="hero-slide-visual">
-                <span class="hero-slide-icon">⌖</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 4: Plná automatizace -->
-          <div class="hero-slide">
-            <div class="hero-slide-inner">
-              <div class="hero-slide-content">
-                <span class="hero-slide-tagline">Bez čekání</span>
-                <h2>Aktivace serveru za <span>30 minut</span></h2>
-                <p>Plně automatický provisioning. Po platbě dostanete IP, SSH přístup a IPMI URL. Nemusíte čekat na lidský zásah.</p>
-                <div class="hero-slide-actions">
-                  <button class="btn btn-primary hero-cta" onclick="window.NH.showScreen('catalog')">Začít teď →</button>
-                </div>
-              </div>
-              <div class="hero-slide-visual">
-                <span class="hero-slide-icon">⚡</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Dots -->
-        <div class="hero-dots">
-          <button class="hero-dot active" onclick="window.NH.carouselGoto(0)" aria-label="Slide 1"></button>
-          <button class="hero-dot" onclick="window.NH.carouselGoto(1)" aria-label="Slide 2"></button>
-          <button class="hero-dot" onclick="window.NH.carouselGoto(2)" aria-label="Slide 3"></button>
-          <button class="hero-dot" onclick="window.NH.carouselGoto(3)" aria-label="Slide 4"></button>
+          <button class="btn btn-cta" style="width:100%" onclick="NH.selectServer('ds-pro')">Vybrat DS-PRO →</button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Trust strip — měřitelné metriky (full-width) -->
-    <div class="trust-strip">
-      <div class="container">
-        <div class="trust-item">
-          <div class="trust-item-value">99,9 %</div>
-          <div class="trust-item-label">Garantovaný uptime</div>
-        </div>
-        <div class="trust-item">
-          <div class="trust-item-value">≤ 30 min</div>
-          <div class="trust-item-label">Aktivace serveru</div>
-        </div>
-        <div class="trust-item">
-          <div class="trust-item-value">2× DC</div>
-          <div class="trust-item-label">Praha + Frankfurt</div>
-        </div>
-        <div class="trust-item">
-          <div class="trust-item-value">24/7</div>
-          <div class="trust-item-label">Český support</div>
-        </div>
+  <!-- TOP 3 -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Nejprodávanější</span>
+        <h2 class="section-title">Tři top konfigurace</h2>
+        <p class="section-sub">Tři nejčastější volby zákazníků. Každý server běží do 30 minut po platbě, plný root v ceně, žádné překvapení v účtu.</p>
       </div>
-    </div>
-
-    <!-- Top 3 — nejprodávanější konfigurace -->
-    <div class="container content-section">
-      <div class="section-header">
-        <div class="eyebrow">Nejprodávanější</div>
-        <h2 class="section-title">Top 3 konfigurace</h2>
-        <p class="section-subtitle">Nejčastější volba našich zákazníků. Stačí kliknout, nakonfigurovat období a server běží do 30 minut.</p>
-      </div>
-
-      <div class="top3-grid">
-        <!-- DS-ENTRY -->
+      <div class="top3">
         <div class="top3-card">
           <div class="top3-name">DS-ENTRY</div>
-          <div class="top3-tagline">Webhosting, VPN, menší projekty</div>
-          <div class="top3-price">
-            <span class="top3-price-amount">1 990</span>
-            <span class="top3-price-period">Kč / měs.</span>
-          </div>
-          <div class="top3-vat-note">bez DPH, fakturace měsíčně</div>
+          <div class="top3-tag">Webhosting, VPN, menší projekty</div>
+          <div class="top3-price"><span class="top3-amt">1 990</span><span class="top3-per">Kč / měs.</span></div>
+          <div class="top3-vat">bez DPH, fakturace měsíčně</div>
           <ul class="top3-features">
-            <li>Intel Xeon E-2236 — 6C / 12T</li>
+            <li>Intel Xeon E-2236 (6C/12T)</li>
             <li>32 GB DDR4 ECC</li>
             <li>2× 512 GB NVMe SSD</li>
-            <li>1 Gbps unmetered, 1× IPv4</li>
+            <li>1 Gbps + 1× IPv4</li>
             <li>IPMI v ceně, plný root</li>
-            <li>Lokace Praha, CZ</li>
+            <li>Lokace Praha</li>
           </ul>
-          <button class="btn btn-outline" style="width:100%;" onclick="window.NH.selectServer('ds-entry')">Vybrat DS-ENTRY</button>
+          <button class="btn btn-outline" style="width:100%" onclick="NH.selectServer('ds-entry')">Vybrat DS-ENTRY</button>
         </div>
-
-        <!-- DS-PRO (Featured) -->
         <div class="top3-card featured">
-          <span class="top3-featured-badge">Doporučeno</span>
+          <span class="top3-badge">Doporučeno</span>
           <div class="top3-name">DS-PRO</div>
-          <div class="top3-tagline">Produkční nasazení a databáze</div>
-          <div class="top3-price">
-            <span class="top3-price-amount">3 490</span>
-            <span class="top3-price-period">Kč / měs.</span>
-          </div>
-          <div class="top3-vat-note">bez DPH, fakturace měsíčně</div>
+          <div class="top3-tag">Produkční nasazení a databáze</div>
+          <div class="top3-price"><span class="top3-amt">3 490</span><span class="top3-per">Kč / měs.</span></div>
+          <div class="top3-vat">bez DPH, fakturace měsíčně</div>
           <ul class="top3-features">
-            <li>Intel Xeon E-2388G — 8C / 16T</li>
+            <li>Intel Xeon E-2388G (8C/16T)</li>
             <li>64 GB DDR4 ECC 3200 MHz</li>
-            <li>2× 1 TB NVMe SSD (RAID 1)</li>
-            <li>1 Gbps unmetered, 2× IPv4</li>
+            <li>2× 1 TB NVMe (RAID 1)</li>
+            <li>1 Gbps + 2× IPv4</li>
             <li>IPMI, plný root, /64 IPv6</li>
-            <li>Lokace Praha, CZ</li>
+            <li>Lokace Praha</li>
           </ul>
-          <button class="btn btn-primary" style="width:100%;" onclick="window.NH.selectServer('ds-pro')">Vybrat DS-PRO</button>
+          <button class="btn btn-cta" style="width:100%" onclick="NH.selectServer('ds-pro')">Vybrat DS-PRO</button>
         </div>
-
-        <!-- DS-POWER -->
         <div class="top3-card">
           <div class="top3-name">DS-POWER</div>
-          <div class="top3-tagline">HPC, rendering, large-scale</div>
-          <div class="top3-price">
-            <span class="top3-price-amount">7 990</span>
-            <span class="top3-price-period">Kč / měs.</span>
-          </div>
-          <div class="top3-vat-note">bez DPH, fakturace měsíčně</div>
+          <div class="top3-tag">HPC, rendering, large-scale</div>
+          <div class="top3-price"><span class="top3-amt">7 990</span><span class="top3-per">Kč / měs.</span></div>
+          <div class="top3-vat">bez DPH, fakturace měsíčně</div>
           <ul class="top3-features">
-            <li>AMD EPYC 7443P — 24C / 48T</li>
+            <li>AMD EPYC 7443P (24C/48T)</li>
             <li>128 GB DDR4 ECC 3200 MHz</li>
             <li>2× 2 TB NVMe (RAID 1)</li>
-            <li>10 Gbps unmetered, 4× IPv4</li>
+            <li>10 Gbps + 4× IPv4</li>
             <li>IPMI, plný root, /48 IPv6</li>
-            <li>Lokace Frankfurt, DE</li>
+            <li>Lokace Frankfurt</li>
           </ul>
-          <button class="btn btn-outline" style="width:100%;" onclick="window.NH.selectServer('ds-power')">Vybrat DS-POWER</button>
+          <button class="btn btn-outline" style="width:100%" onclick="NH.selectServer('ds-power')">Vybrat DS-POWER</button>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- Naše služby — produktový přehled -->
-    <div class="container content-section" id="services">
-      <div class="section-header">
-        <div class="eyebrow">Naše služby</div>
-        <h2 class="section-title">Vše pro váš online provoz</h2>
-        <p class="section-subtitle">Od výkonných dedikovaných serverů přes virtuální stroje a úložiště až po e-mail a domény. Šetříme vaši energii — vše pod jednou střechou.</p>
+  <!-- WHY -->
+  <section class="section muted">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Proč NordHost</span>
+        <h2 class="section-title">Servery bez kompromisů</h2>
+        <p class="section-sub">Plnohodnotný hardware, plně automatizovaná správa, žádné překvapení v ceně.</p>
       </div>
+      <div class="usp">
+        <div class="usp-item"><div class="usp-icon">⬆</div><h3>99,9 % Uptime SLA</h3><p>Garantovaná dostupnost s finanční kompenzací při výpadcích. Tier III datová centra s redundantním napájením.</p></div>
+        <div class="usp-item"><div class="usp-icon">⚡</div><h3>Aktivace ≤ 30 min</h3><p>Plně automatický provisioning přes EasyDCIM. Server připraven k použití do půl hodiny od platby.</p></div>
+        <div class="usp-item"><div class="usp-icon">🔒</div><h3>Plný root + IPMI</h3><p>Vlastní OS, vlastní konfigurace. IPMI pro vzdálenou správu i mimo OS. Server patří vám.</p></div>
+        <div class="usp-item"><div class="usp-icon">🌐</div><h3>Vlastní IPv4 + IPv6</h3><p>Minimálně 1× IPv4 a /64 IPv6 v ceně. Větší konfigurace 2-4× IPv4 a /48 IPv6 bez příplatku.</p></div>
+        <div class="usp-item"><div class="usp-icon">💾</div><h3>NVMe SSD + ECC RAM</h3><p>Žádné rotující disky pro produkci. ECC paměti detekují bitové chyby, ochrana databází a kritických dat.</p></div>
+        <div class="usp-item"><div class="usp-icon">☎</div><h3>24/7 česky</h3><p>Český support tým dostupný nonstop. Průměrná doba první odpovědi pod 15 minut.</p></div>
+      </div>
+    </div>
+  </section>
 
-      <div class="services-grid">
-        <a class="service-card active" onclick="window.NH.showScreen('catalog'); return false;" href="#" tabindex="0">
-          <div class="service-icon">⛁</div>
+  <!-- SERVICES (8 cards) -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Naše služby</span>
+        <h2 class="section-title">Vše pro váš online provoz</h2>
+        <p class="section-sub">Od dedikovaných serverů přes virtuální stroje a úložiště až po e-mail a domény. Postupně rozšiřujeme nabídku — co je dnes ve fázi „připravujeme" bude do několika měsíců živé.</p>
+      </div>
+      <div class="services">
+        <a class="svc active" onclick="NH.show('catalog');return false" href="#">
+          <div class="svc-icon">⛁</div>
           <h3>Dedikované servery</h3>
           <p>Bare-metal výkon bez sdílení. Plný root, ECC RAM, IPMI v ceně. 5 konfigurací od 1 990 Kč/měs.</p>
-          <div class="service-card-foot"><span>Prohlédnout →</span></div>
+          <div class="svc-foot">Prohlédnout →</div>
         </a>
-
-        <div class="service-card coming">
-          <span class="coming-soon-badge">Připravujeme</span>
-          <div class="service-icon">▦</div>
-          <h3>VPS — dedikovaný výkon</h3>
-          <p>Virtuální server s 100 % vyhrazeným CPU a RAM. Bez „noisy neighbor" efektu, předvídatelný výkon.</p>
-          <div class="service-card-foot"><span>Brzy v nabídce</span></div>
-        </div>
-
-        <div class="service-card coming">
-          <span class="coming-soon-badge">Připravujeme</span>
-          <div class="service-icon">▥</div>
-          <h3>VPS klasický</h3>
-          <p>Cenově dostupný virtuální server pro standardní zátěž. Ideální pro testovací prostředí a menší aplikace.</p>
-          <div class="service-card-foot"><span>Brzy v nabídce</span></div>
-        </div>
-
-        <div class="service-card coming">
-          <span class="coming-soon-badge">Připravujeme</span>
-          <div class="service-icon">◫</div>
-          <h3>Datové úložiště</h3>
-          <p>Velkokapacitní storage pro zálohy, archivaci a sdílení. S3-kompatibilní API i klasický NFS přístup.</p>
-          <div class="service-card-foot"><span>Brzy v nabídce</span></div>
-        </div>
-
-        <div class="service-card coming">
-          <span class="coming-soon-badge">Připravujeme</span>
-          <div class="service-icon">☁</div>
-          <h3>Cloud</h3>
-          <p>Managed cloud platforma s autoscaling a load balancery. Pro produkční webové aplikace a microservices.</p>
-          <div class="service-card-foot"><span>Brzy v nabídce</span></div>
-        </div>
-
-        <div class="service-card coming">
-          <span class="coming-soon-badge">Připravujeme</span>
-          <div class="service-icon">✉</div>
-          <h3>E-mail</h3>
-          <p>Profesionální e-mailové schránky na vaší doméně. IMAP, SMTP, antispam, kalendář a kontakty.</p>
-          <div class="service-card-foot"><span>Brzy v nabídce</span></div>
-        </div>
-
-        <div class="service-card coming">
-          <span class="coming-soon-badge">Připravujeme</span>
-          <div class="service-icon">⌘</div>
-          <h3>Domény</h3>
-          <p>Registrace a správa domén všech TLD. Centrální správa DNS, automatické obnovy, ochrana WHOIS.</p>
-          <div class="service-card-foot"><span>Brzy v nabídce</span></div>
-        </div>
-
-        <div class="service-card coming">
-          <span class="coming-soon-badge">Připravujeme</span>
-          <div class="service-icon">⚛</div>
-          <h3>AI / GPU služby</h3>
-          <p>Pronájem GPU pro inferenci a trénink ML modelů. NVIDIA A4000/A100, hodinová tarifikace.</p>
-          <div class="service-card-foot"><span>Brzy v nabídce</span></div>
-        </div>
+        <div class="svc coming"><span class="coming-badge">Brzy</span><div class="svc-icon">▦</div><h3>VPS s vyhrazeným výkonem</h3><p>Virtuální server se 100 % vyhrazeným CPU a RAM. Bez „noisy neighbor" efektu, předvídatelný výkon.</p><div class="svc-foot">Připravujeme</div></div>
+        <div class="svc coming"><span class="coming-badge">Brzy</span><div class="svc-icon">▥</div><h3>VPS klasický</h3><p>Cenově dostupný virtuál pro testovací prostředí, malé aplikace a mikroservices.</p><div class="svc-foot">Připravujeme</div></div>
+        <div class="svc coming"><span class="coming-badge">Brzy</span><div class="svc-icon">◫</div><h3>Datové úložiště</h3><p>Velkokapacitní storage pro zálohy, archivaci, sdílení. S3-kompatibilní API i klasický NFS.</p><div class="svc-foot">Připravujeme</div></div>
+        <div class="svc coming"><span class="coming-badge">Brzy</span><div class="svc-icon">☁</div><h3>Cloud</h3><p>Managed cloud platforma s autoscaling a load balancery. Pro produkční webové aplikace a microservices.</p><div class="svc-foot">Připravujeme</div></div>
+        <div class="svc coming"><span class="coming-badge">Brzy</span><div class="svc-icon">✉</div><h3>E-mail</h3><p>Profesionální e-mailové schránky na vaší doméně. IMAP, SMTP, antispam, kalendář.</p><div class="svc-foot">Připravujeme</div></div>
+        <div class="svc coming"><span class="coming-badge">Brzy</span><div class="svc-icon">⌘</div><h3>Domény</h3><p>Registrace a správa domén všech TLD. Centrální DNS, automatické obnovy, ochrana WHOIS.</p><div class="svc-foot">Připravujeme</div></div>
+        <div class="svc coming"><span class="coming-badge">Brzy</span><div class="svc-icon">⚛</div><h3>AI / GPU služby</h3><p>Pronájem GPU pro inferenci a trénink ML modelů. NVIDIA A4000/A100, hodinová tarifikace.</p><div class="svc-foot">Připravujeme</div></div>
       </div>
     </div>
+  </section>
 
-    <!-- Why NordHost (USP) -->
-    <div class="container content-section">
-      <div class="section-header">
-        <div class="eyebrow">Proč NordHost</div>
-        <h2 class="section-title">Servery bez kompromisů</h2>
-        <p class="section-subtitle">Plnohodnotný hardware, plně automatizovaná správa, žádné překvapení v ceně.</p>
-      </div>
-
-      <div class="usp-grid">
-        <div class="usp-item">
-          <div class="usp-icon">⬆</div>
-          <h3>99,9 % Uptime SLA</h3>
-          <p>Garantovaná dostupnost s finanční kompenzací při výpadcích. Tier III datová centra s redundantním napájením a chlazením.</p>
-        </div>
-        <div class="usp-item">
-          <div class="usp-icon">⚡</div>
-          <h3>Aktivace do 30 minut</h3>
-          <p>Server připraven k použití do půl hodiny od platby. Plně automatický provisioning přes EasyDCIM, žádné čekání na lidský zásah.</p>
-        </div>
-        <div class="usp-item">
-          <div class="usp-icon">🔒</div>
-          <h3>Plný root přístup</h3>
-          <p>Vlastní OS, vlastní konfigurace, IPMI pro vzdálenou správu i mimo OS. Server patří tobě, ne nám.</p>
-        </div>
-        <div class="usp-item">
-          <div class="usp-icon">🌐</div>
-          <h3>Vlastní IPv4 + IPv6</h3>
-          <p>Minimálně 1× IPv4 a /64 IPv6 v ceně. Větší konfigurace dostávají 2-4 IPv4 a /48 IPv6 bez příplatku.</p>
-        </div>
-        <div class="usp-item">
-          <div class="usp-icon">💾</div>
-          <h3>NVMe SSD + ECC RAM</h3>
-          <p>Žádné rotující disky pro produkční konfigurace. ECC paměti detekují a opravují bitové chyby — ochrana pro databáze a kritická data.</p>
-        </div>
-        <div class="usp-item">
-          <div class="usp-icon">☎</div>
-          <h3>24/7 česky</h3>
-          <p>Český support tým dostupný nonstop. Průměrná doba první odpovědi pod 15 minut, nemluvíme o ticketech přes outsourcing.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- How it works -->
-    <div class="container content-section alt" id="how-it-works">
-      <div class="section-header">
-        <div class="eyebrow">Tři kroky k běžícímu serveru</div>
+  <!-- HOW -->
+  <section class="section muted" id="how">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Tři kroky</span>
         <h2 class="section-title">Bez papírování, bez čekání</h2>
-        <p class="section-subtitle">Od výběru ke <code class="mono">ssh root@</code> za méně než hodinu.</p>
+        <p class="section-sub">Od výběru ke <span class="mono">ssh root@</span> za méně než hodinu.</p>
       </div>
-
-      <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-number">01 / Vyberte konfiguraci</div>
-          <h3>Server podle vaší zátěže</h3>
-          <p>Pět konfigurací od entry-level webhostingu po EPYC s GPU. Specifikace transparentně, žádné asterisky pod čarou.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-number">02 / Zaplaťte online</div>
-          <h3>Platba kartou nebo převodem</h3>
-          <p>Bezpečná platba přes GoPay (karty, Apple/Google Pay) nebo bankovní převod. Faktura automaticky na e-mail.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-number">03 / Server běží</div>
-          <h3>Přístupy do 30 minut</h3>
-          <p>Plně automatický provisioning. Po dokončení dostanete IP, SSH přístup a IPMI URL. Pak už je to jen na vás.</p>
-        </div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><h3>Vyberte konfiguraci</h3><p>Pět konfigurací od entry-level webhostingu po EPYC s GPU. Specifikace transparentně, žádné asterisky pod čarou.</p></div>
+        <div class="step"><div class="step-num">2</div><h3>Zaplaťte online</h3><p>Bezpečná platba kartou, Apple/Google Pay nebo bankovním převodem. Faktura automaticky na e-mail.</p></div>
+        <div class="step"><div class="step-num">3</div><h3>Server běží</h3><p>Plně automatický provisioning. Po dokončení dostanete IP, SSH a IPMI URL. Pak už je to jen na vás.</p></div>
       </div>
     </div>
+  </section>
 
-    <!-- Datacenters -->
-    <div class="container content-section" id="datacenters">
-      <div class="section-header">
-        <div class="eyebrow">Infrastruktura</div>
-        <h2 class="section-title">Dvě lokace pro evropskou latenci</h2>
-        <p class="section-subtitle">Praha pro CZ/SK trh, Frankfurt pro DACH a širší Evropu. Oboje Tier III, oboje s vlastním IP rangem.</p>
+  <!-- DATACENTERS -->
+  <section class="section" id="dc">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Naše infrastruktura</span>
+        <h2 class="section-title">Sídlo i datová centra v Evropě</h2>
+        <p class="section-sub">Provozujeme vlastní serverovnu, ale data hostíme tam, kde je síť nejrychlejší. Praha pro CZ/SK, Frankfurt pro DACH a širší Evropu.</p>
       </div>
-
       <div class="dc-grid">
-        <div class="dc-card">
-          <div class="dc-flag">CZ — Hlavní lokace</div>
-          <h3>Praha — DC Tower</h3>
-          <p>Vlajková lokace pro český a slovenský trh. Přímá konektivita do NIX.CZ, redundantní 100 Gbps páteř.</p>
+        <div class="dc-card hq">
+          <div class="dc-flag">CZ — Sídlo společnosti</div>
+          <h3>Mladá Boleslav</h3>
+          <p>Naše kanceláře a technické zázemí. Tady plánujeme, vyvíjíme platformu a sedí podpora. Lidsky dostupné — datacentrum, které znáte jménem.</p>
           <div class="dc-meta">
-            <div class="dc-meta-item">
-              <div class="dc-meta-label">Tier</div>
-              <div class="dc-meta-value">III</div>
-            </div>
-            <div class="dc-meta-item">
-              <div class="dc-meta-label">Latence (Praha)</div>
-              <div class="dc-meta-value">&lt; 1 ms</div>
-            </div>
-            <div class="dc-meta-item">
-              <div class="dc-meta-label">Konektivita</div>
-              <div class="dc-meta-value">NIX.CZ, IPv6</div>
-            </div>
-            <div class="dc-meta-item">
-              <div class="dc-meta-label">Power</div>
-              <div class="dc-meta-value">2N redundance</div>
-            </div>
+            <div><div class="dc-mlbl">Funkce</div><div class="dc-mval">HQ + support</div></div>
+            <div><div class="dc-mlbl">Tým</div><div class="dc-mval">Plně český</div></div>
+          </div>
+        </div>
+        <div class="dc-card">
+          <div class="dc-flag">CZ — Hlavní DC</div>
+          <h3>Praha — DC Tower</h3>
+          <p>Vlajková lokace pro CZ/SK trh. Přímá konektivita do NIX.CZ, redundantní 100 Gbps páteř, Tier III, 2N redundance napájení.</p>
+          <div class="dc-meta">
+            <div><div class="dc-mlbl">Tier</div><div class="dc-mval">III</div></div>
+            <div><div class="dc-mlbl">Latence (Praha)</div><div class="dc-mval">&lt; 1 ms</div></div>
+            <div><div class="dc-mlbl">Konektivita</div><div class="dc-mval">NIX.CZ, IPv6</div></div>
+            <div><div class="dc-mlbl">Power</div><div class="dc-mval">2N redundance</div></div>
           </div>
         </div>
         <div class="dc-card">
           <div class="dc-flag">DE — Evropská hub</div>
           <h3>Frankfurt — Equinix FR5</h3>
-          <p>Jeden z největších evropských hubs. Ideální pro low-latency mezinárodní projekty a peering s globálními sítěmi.</p>
+          <p>Jeden z největších evropských hubs. Ideální pro low-latency mezinárodní projekty a peering s globálními sítěmi (DE-CIX, AMS-IX).</p>
           <div class="dc-meta">
-            <div class="dc-meta-item">
-              <div class="dc-meta-label">Tier</div>
-              <div class="dc-meta-value">III+</div>
-            </div>
-            <div class="dc-meta-item">
-              <div class="dc-meta-label">Latence (Praha→FRA)</div>
-              <div class="dc-meta-value">~10 ms</div>
-            </div>
-            <div class="dc-meta-item">
-              <div class="dc-meta-label">Konektivita</div>
-              <div class="dc-meta-value">DE-CIX, AMS-IX</div>
-            </div>
-            <div class="dc-meta-item">
-              <div class="dc-meta-label">Power</div>
-              <div class="dc-meta-value">2N redundance</div>
-            </div>
+            <div><div class="dc-mlbl">Tier</div><div class="dc-mval">III+</div></div>
+            <div><div class="dc-mlbl">Latence (PRG→FRA)</div><div class="dc-mval">~10 ms</div></div>
+            <div><div class="dc-mlbl">Konektivita</div><div class="dc-mval">DE-CIX, AMS-IX</div></div>
+            <div><div class="dc-mlbl">Power</div><div class="dc-mval">2N redundance</div></div>
           </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- FAQ -->
-    <div class="container content-section alt" id="faq">
-      <div class="section-header">
-        <div class="eyebrow">Časté dotazy</div>
+  <!-- FAQ -->
+  <section class="section muted" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Časté dotazy</span>
         <h2 class="section-title">Co se vás budou ptát kolegové</h2>
       </div>
-
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary>Co znamená „dedikovaný server“ v praxi?</summary>
-          <div class="faq-answer">
-            <p>Hardware (CPU, RAM, disky, síťová karta) patří výhradně jedné službě — vám. Žádný hypervizor, žádné sousední VM, žádný „noisy neighbor“ efekt. To znamená předvídatelný výkon a možnost spustit cokoli, co potřebujete (vlastní hypervizor, kontejnery, custom kernel).</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>Jaké operační systémy podporujete?</summary>
-          <div class="faq-answer">
-            <p>Standardně Debian 12, Ubuntu 24.04 LTS, Rocky Linux 9, AlmaLinux 9 a Proxmox VE 8. Reinstalace dostupná z portálu, automatická během cca 5 minut.</p>
-            <p>Pokud potřebujete jiný OS (FreeBSD, custom image), domluvíme přes support — IPMI máte k dispozici, takže jste bez omezení.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>Co když potřebuju server restartovat o víkendu?</summary>
-          <div class="faq-answer">
-            <p>Reboot je samoobslužný přes zákaznický portál — k dispozici 24/7. Stejně tak reinstalace OS, sledování stavu a IPMI konzole pro hlubší diagnostiku.</p>
-            <p>Pro skutečně havarijní situace (HW selhání, výpadek konektivity) je k dispozici český support tým s první odpovědí pod 15 minut.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>Jak funguje SLA 99,9 %?</summary>
-          <div class="faq-answer">
-            <p>Garance se počítá měsíčně. 99,9 % v měsíci = max 43 minut nedostupnosti. Při překročení automaticky kompenzujeme 5–25 % měsíční ceny formou kreditu na další období.</p>
-            <p>Plné znění SLA je součástí smluvních podmínek, dostupné před objednávkou.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>Můžu mít víc IPv4 adres?</summary>
-          <div class="faq-answer">
-            <p>Konfigurace DS-PRO a vyšší obsahují 2-4 IPv4 v ceně. Další lze doobjednat (40 Kč/měs/IP). IPv6 dostáváte vždy alespoň /64, větší konfigurace /48.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>Co se stane, když chci službu zrušit?</summary>
-          <div class="faq-answer">
-            <p>Zrušíte z portálu jedním klikem. Server běží do konce zaplaceného období, pak se automaticky deaktivuje. Žádné výpovědní lhůty, žádný „lock-in“. Data zálohujte včas — po deaktivaci se disky bezpečně mažou.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>Posíláte zálohy?</summary>
-          <div class="faq-answer">
-            <p>Pravidelné zálohy nejsou součástí standardního pronájmu — server je váš, zálohy běží na vaše rozhodnutí. Pro klienty, kteří chtějí managed backup, máme storage konfigurace s NVMe cache + RAID 10. Pokud řešíte off-site backup, ozvěte se a dohodneme.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>Můžu si server před objednávkou vyzkoušet?</summary>
-          <div class="faq-answer">
-            <p>Pro DS-PRO a vyšší konfigurace nabízíme 14denní zkušební období s plnou refundací bez udání důvodu. Stačí napsat na <a href="mailto:hello@nordhost.cz">hello@nordhost.cz</a>.</p>
-          </div>
-        </details>
+      <div class="faq">
+        <details class="faq-q"><summary>Co znamená „dedikovaný server" v praxi?</summary><div class="faq-a">Hardware (CPU, RAM, disky, síťová karta) patří výhradně jedné službě — vám. Žádný hypervisor, žádné sousední VM, žádný „noisy neighbor" efekt. Předvídatelný výkon a možnost spustit cokoli (vlastní hypervisor, kontejnery, custom kernel).</div></details>
+        <details class="faq-q"><summary>Jaké operační systémy podporujete?</summary><div class="faq-a">Standardně Debian 12, Ubuntu 24.04 LTS, Rocky Linux 9, AlmaLinux 9, Proxmox VE 8. Reinstalace samoobslužně z portálu, ~5 minut. Pro custom OS použijete IPMI konzoli — bez omezení.</div></details>
+        <details class="faq-q"><summary>Jak funguje SLA 99,9 %?</summary><div class="faq-a">Měsíční výpočet. 99,9 % = max 43 minut nedostupnosti. Při překročení automaticky kompenzujeme 5–25 % měsíční ceny formou kreditu. Plné znění SLA před objednávkou.</div></details>
+        <details class="faq-q"><summary>Můžu mít víc IPv4 adres?</summary><div class="faq-a">Konfigurace DS-PRO a vyšší obsahují 2-4 IPv4 v ceně. Další lze doobjednat (40 Kč/měs/IP). IPv6 vždy alespoň /64, větší konfigurace /48.</div></details>
+        <details class="faq-q"><summary>Co když chci službu zrušit?</summary><div class="faq-a">Zrušíte z portálu jedním klikem. Server běží do konce zaplaceného období, pak se deaktivuje. Žádné výpovědní lhůty, žádný lock-in. Zálohujte data včas — po deaktivaci se disky bezpečně mažou.</div></details>
+        <details class="faq-q"><summary>Reboot serveru o víkendu?</summary><div class="faq-a">Reboot, reinstalace, IPMI konzole — vše samoobslužně z portálu, 24/7. Pro havarijní situace je k dispozici český support tým s první odpovědí pod 15 minut.</div></details>
+        <details class="faq-q"><summary>Posíláte zálohy?</summary><div class="faq-a">Pravidelné zálohy nejsou součástí standardního pronájmu — server je váš, zálohy si řídíte. Pro klienty s requirements na managed backup máme storage konfigurace s NVMe cache + RAID 10. Pro off-site backup se domluvíme.</div></details>
+        <details class="faq-q"><summary>Můžu si server před objednávkou vyzkoušet?</summary><div class="faq-a">Pro DS-PRO a vyšší konfigurace nabízíme 14denní zkušební období s plnou refundací bez udání důvodu. Stačí napsat na <a href="mailto:hello@nordhost.cz">hello@nordhost.cz</a>.</div></details>
       </div>
     </div>
+  </section>
 
-    <!-- Final CTA -->
-    <div class="container content-section">
-      <div class="final-cta">
+  <!-- FINAL CTA -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="cta-block">
         <h2>Začněte za 30 minut</h2>
-        <p>Vyberte konfiguraci, zaplaťte a pište do prvního <code class="mono">apt update</code> ještě dnes.</p>
-        <button class="btn btn-primary hero-cta" onclick="window.NH.showScreen('catalog')">Prohlédnout servery →</button>
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div>
-            <div class="navbar-logo" style="cursor:default;">Nord<span>Host</span></div>
-            <p class="footer-brand-text">Dedikované servery pro náročné projekty. Sídlo v Mladé Boleslavi, datová centra v Praze a Frankfurtu.</p>
-            <p class="footer-brand-text" style="font-size: 12px; margin-top: 8px;"><strong style="color: var(--text-secondary);">Sídlo:</strong> Mladá Boleslav, ČR</p>
-          </div>
-          <div class="footer-col">
-            <h4>Produkt</h4>
-            <ul>
-              <li><a href="#" onclick="window.NH.showScreen('catalog'); return false;">Servery</a></li>
-              <li><a href="#how-it-works">Jak to funguje</a></li>
-              <li><a href="#datacenters">Datová centra</a></li>
-              <li><a href="#faq">FAQ</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Společnost</h4>
-            <ul>
-              <li><a href="#">O nás</a></li>
-              <li><a href="#">Kontakt</a></li>
-              <li><a href="#">Smluvní podmínky</a></li>
-              <li><a href="#">Ochrana údajů</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Status</h4>
-            <ul>
-              <li><a href="#">Stav služeb</a></li>
-              <li><a href="#">SLA</a></li>
-              <li><a href="mailto:hello@nordhost.cz">hello@nordhost.cz</a></li>
-            </ul>
-          </div>
+        <p>Vyberte konfiguraci, zaplaťte a pište do prvního <span class="mono">apt update</span> ještě dnes.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <a class="btn btn-cta btn-lg" href="#" onclick="NH.show('catalog');return false">Vybrat server →</a>
+          <a class="btn btn-outline btn-lg" href="mailto:hello@nordhost.cz">Napsat nám</a>
         </div>
-        <div class="footer-bottom">
-          <span>© 2026 NordHost</span>
-          <span class="mono">Demo &middot; nordhost.2marsa.cz</span>
-        </div>
-      </div>
-    </footer>
-  </section>
-
-
-  <!-- =========================================================================
-       SCREEN: CATALOG
-       ========================================================================= -->
-  <section id="screen-catalog" class="screen">
-    <div class="container catalog-section">
-      <div class="section-header">
-        <div class="eyebrow">Katalog</div>
-        <h2 class="section-title">Dedikované servery</h2>
-        <p class="section-subtitle">Vyberte konfiguraci, která odpovídá vaší zátěži. Všechny servery s plným root přístupem, ECC RAM a IPMI.</p>
-      </div>
-      <div class="server-grid" id="server-grid">
-        <!-- Generated by JS -->
       </div>
     </div>
   </section>
 
-
-  <!-- =========================================================================
-       SCREEN: SERVER DETAIL
-       ========================================================================= -->
-  <section id="screen-server-detail" class="screen">
-    <div class="container detail-section">
-      <a href="#" class="detail-back" onclick="window.NH.showScreen('catalog'); return false;">← Zpět na katalog</a>
-      <div class="detail-layout">
+  <!-- FOOTER -->
+  <footer class="foot">
+    <div class="container">
+      <div class="foot-grid">
         <div>
-          <h2 class="section-title" id="detail-name"></h2>
-          <p class="section-subtitle" id="detail-subtitle" style="margin-bottom: var(--space-3);"></p>
-          <table class="spec-table" id="detail-spec-table">
-            <!-- Generated by JS -->
-          </table>
+          <div class="logo" style="cursor:default">Nord<span>Host</span></div>
+          <p class="foot-brand">Pronájem dedikovaných serverů s plnou automatizací. Sídlo Mladá Boleslav, datová centra Praha + Frankfurt.</p>
+          <p class="foot-addr"><strong>Sídlo:</strong> Mladá Boleslav, ČR<br><strong>E-mail:</strong> <a href="mailto:hello@nordhost.cz">hello@nordhost.cz</a></p>
         </div>
-        <div class="price-card">
-          <div class="price-card-title" id="price-card-name"></div>
-          <div class="price-card-subtitle">Měsíční pronájem · zákaznická lokace v ceně</div>
-          <div class="price-display" id="price-display"></div>
-          <div class="price-original" id="price-original"></div>
-          <div class="period-selector" id="period-selector">
-            <!-- Generated by JS -->
-          </div>
-          <button class="btn btn-primary" style="width:100%;" onclick="window.NH.goToCheckout()">Objednat →</button>
-          <p style="margin-top: var(--space-4); font-size: 12px; color: var(--text-muted); text-align: center;">Aktivace do 30 minut po platbě</p>
-        </div>
+        <div class="foot-col"><h4>Produkty</h4><ul><li><a href="#" onclick="NH.show('catalog');return false">Dedikované servery</a></li><li><a href="#">VPS (brzy)</a></li><li><a href="#">Storage (brzy)</a></li><li><a href="#">Cloud (brzy)</a></li></ul></div>
+        <div class="foot-col"><h4>Společnost</h4><ul><li><a href="#">O nás</a></li><li><a href="#contact">Kontakt</a></li><li><a href="#">Smluvní podmínky</a></li><li><a href="#">Ochrana údajů</a></li></ul></div>
+        <div class="foot-col"><h4>Status</h4><ul><li><a href="#">Stav služeb</a></li><li><a href="#">SLA</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+      </div>
+      <div class="foot-bot">
+        <span>© 2026 NordHost</span>
+        <span class="mono">Demo · nordhost.2marsa.cz</span>
       </div>
     </div>
-  </section>
+  </footer>
+</section>
 
-
-  <!-- =========================================================================
-       SCREEN: CHECKOUT
-       ========================================================================= -->
-  <section id="screen-checkout" class="screen">
-    <div class="container checkout-section">
-      <div class="section-header" style="text-align:left; margin-bottom: var(--space-7);">
-        <h2 class="section-title">Dokončení objednávky</h2>
-        <p class="section-subtitle">Vyplňte kontaktní údaje pro zpracování objednávky a vystavení faktury.</p>
-      </div>
-      <div class="checkout-layout">
-        <div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Jméno a příjmení</label>
-              <input type="text" placeholder="Jan Novák" autocomplete="name">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Firma <span class="optional">(nepovinné)</span></label>
-              <input type="text" placeholder="Acme s.r.o." autocomplete="organization">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">E-mail</label>
-              <input type="email" placeholder="jan@example.cz" autocomplete="email">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Telefon</label>
-              <input type="tel" placeholder="+420 123 456 789" autocomplete="tel">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">IČO <span class="optional">(nepovinné)</span></label>
-              <input type="text" placeholder="12345678">
-            </div>
-            <div class="form-group">
-              <label class="form-label">DIČ <span class="optional">(nepovinné)</span></label>
-              <input type="text" placeholder="CZ12345678">
-            </div>
-          </div>
-          <div class="checkout-agreement">
-            <input type="checkbox" id="agree-terms">
-            <label for="agree-terms">Souhlasím s <a href="#">obchodními podmínkami</a> a <a href="#">zásadami zpracování osobních údajů</a>.</label>
-          </div>
-          <button class="btn btn-primary" style="width:100%; max-width:320px;" onclick="window.NH.goToPayment()">Přejít k platbě →</button>
-        </div>
-        <div class="order-summary" id="order-summary">
-          <!-- Generated by JS -->
-        </div>
-      </div>
+<!-- ===== CATALOG ===== -->
+<section id="screen-catalog" class="screen">
+  <div class="container section">
+    <div class="section-head">
+      <span class="eyebrow">Katalog</span>
+      <h2 class="section-title">Dedikované servery</h2>
+      <p class="section-sub">Vyberte konfiguraci podle zátěže. Všechny servery s plným root, ECC RAM a IPMI.</p>
     </div>
-  </section>
+    <div class="cat-grid" id="cat-grid"></div>
+  </div>
+</section>
 
-
-  <!-- =========================================================================
-       SCREEN: PAYMENT PENDING
-       ========================================================================= -->
-  <section id="screen-payment-pending" class="screen">
-    <div class="container pending-section">
-      <div class="spinner"></div>
-      <h2>Zpracováváme platbu…</h2>
-      <p>Neodcházejte z této stránky. Budete přesměrováni automaticky.</p>
-    </div>
-  </section>
-
-
-  <!-- =========================================================================
-       SCREEN: ORDER CONFIRMED
-       ========================================================================= -->
-  <section id="screen-order-confirmed" class="screen">
-    <div class="container confirmed-section">
-      <div class="checkmark-circle">✓</div>
-      <h2>Objednávka přijata</h2>
-      <p>Děkujeme. Server bude aktivován do 30 minut, přístupové údaje obdržíte na e-mail. Mezitím se podívejte do portálu.</p>
-      <div class="confirmed-details" id="confirmed-details">
-        <!-- Generated by JS -->
+<!-- ===== DETAIL ===== -->
+<section id="screen-detail" class="screen">
+  <div class="container section">
+    <a href="#" class="detail-back" onclick="NH.show('catalog');return false">← Zpět na katalog</a>
+    <div class="detail-grid">
+      <div>
+        <h2 class="section-title" id="d-name"></h2>
+        <p class="section-sub" id="d-sub" style="text-align:left;margin:0 0 var(--space-3)"></p>
+        <table class="spec-tbl" id="d-tbl"></table>
       </div>
-      <button class="btn btn-primary" onclick="window.NH.showPortal('portal-dashboard')">Přejít do portálu →</button>
-    </div>
-  </section>
-
-
-  <!-- =========================================================================
-       PORTAL LAYOUT WRAPPER
-       ========================================================================= -->
-  <div id="portal-wrapper" style="display:none;">
-
-    <!-- PORTAL SIDEBAR -->
-    <aside class="portal-sidebar">
-      <div class="portal-sidebar-logo">Nord<span>Host</span></div>
-      <ul class="sidebar-nav">
-        <li><a href="#" class="active" onclick="window.NH.showPortal('portal-dashboard'); return false;" data-portal="portal-dashboard"><span class="nav-icon">◻</span> Moje služby</a></li>
-        <li><a href="#" onclick="window.NH.showPortal('portal-invoices'); return false;" data-portal="portal-invoices"><span class="nav-icon">▤</span> Faktury</a></li>
-        <li><a href="#" onclick="return false;"><span class="nav-icon">✉</span> Podpora</a></li>
-        <li><a href="#" onclick="return false;"><span class="nav-icon">⚙</span> Nastavení</a></li>
-      </ul>
-      <div class="sidebar-bottom">
-        <div class="sidebar-user">
-          <div class="sidebar-avatar">JN</div>
-          <div>
-            <div class="sidebar-user-name">Jan Novák</div>
-            <div class="sidebar-user-company">Acme s.r.o.</div>
-          </div>
-        </div>
-        <button class="btn btn-outline btn-sm" style="width:100%;" onclick="window.NH.logout()">Odhlásit se</button>
+      <div class="price-card">
+        <div class="price-name" id="p-name"></div>
+        <div class="price-sub">Měsíční pronájem · IPMI v ceně</div>
+        <div class="price-amt" id="p-amt"></div>
+        <div class="price-orig" id="p-orig"></div>
+        <div class="period-sel" id="p-sel"></div>
+        <button class="btn btn-cta" style="width:100%" onclick="NH.toCheckout()">Objednat →</button>
+        <p style="margin-top:var(--space-3);font-size:12px;color:var(--fg-mute);text-align:center">Aktivace do 30 minut po platbě</p>
       </div>
-    </aside>
-
-    <div class="portal-main">
-
-      <!-- ===================================================================
-           SCREEN: PORTAL DASHBOARD
-           =================================================================== -->
-      <section id="screen-portal-dashboard" class="screen">
-        <div class="portal-topbar">
-          <h1>Moje služby</h1>
-          <button class="theme-toggle" onclick="window.NH.toggleTheme()" title="Přepnout motiv" aria-label="Přepnout motiv">◐</button>
-        </div>
-        <div class="dashboard-card">
-          <div class="dashboard-server-header">
-            <span class="dashboard-server-name">DS-PRO</span>
-            <span class="badge badge-active">Aktivní</span>
-          </div>
-          <div class="dashboard-stats">
-            <div class="dashboard-stat">
-              <div class="dashboard-stat-label">IP adresa</div>
-              <div class="dashboard-stat-value mono">185.203.114.42</div>
-            </div>
-            <div class="dashboard-stat">
-              <div class="dashboard-stat-label">Lokace</div>
-              <div class="dashboard-stat-value">Praha, CZ</div>
-            </div>
-            <div class="dashboard-stat">
-              <div class="dashboard-stat-label">Platnost do</div>
-              <div class="dashboard-stat-value">31. 8. 2026</div>
-            </div>
-          </div>
-          <div class="dashboard-actions">
-            <button class="btn btn-outline btn-sm" onclick="window.NH.showPortal('portal-server')">Detail serveru</button>
-            <button class="btn btn-outline btn-sm" onclick="window.NH.showPortal('portal-server'); setTimeout(()=>window.NH.switchTab('tab-actions'),100);">Reboot</button>
-            <button class="btn btn-outline btn-sm" onclick="window.NH.showPortal('portal-server'); setTimeout(()=>window.NH.switchTab('tab-access'),100);">Přístupy</button>
-            <button class="btn btn-outline btn-sm" onclick="window.NH.showPortal('portal-invoices')">Faktury</button>
-          </div>
-        </div>
-      </section>
-
-
-      <!-- ===================================================================
-           SCREEN: PORTAL SERVER DETAIL
-           =================================================================== -->
-      <section id="screen-portal-server" class="screen">
-        <div class="portal-topbar">
-          <h1>DS-PRO — Detail serveru</h1>
-          <button class="btn btn-outline btn-sm" onclick="window.NH.showPortal('portal-dashboard')">← Zpět</button>
-        </div>
-
-        <div class="tabs">
-          <button class="tab-btn active" onclick="window.NH.switchTab('tab-overview')">Přehled</button>
-          <button class="tab-btn" onclick="window.NH.switchTab('tab-access')">Přístupy</button>
-          <button class="tab-btn" onclick="window.NH.switchTab('tab-hardware')">Hardware</button>
-          <button class="tab-btn" onclick="window.NH.switchTab('tab-actions')">Akce</button>
-        </div>
-
-        <!-- Tab: Přehled -->
-        <div id="tab-overview" class="tab-content active">
-          <div class="dashboard-card">
-            <div class="dashboard-stats" style="margin-bottom: 0; padding: 0; border: 0;">
-              <div class="dashboard-stat">
-                <div class="dashboard-stat-label">Stav</div>
-                <div class="dashboard-stat-value"><span class="badge badge-active">Aktivní</span></div>
-              </div>
-              <div class="dashboard-stat">
-                <div class="dashboard-stat-label">Uptime</div>
-                <div class="dashboard-stat-value mono">47d 13h 22m</div>
-              </div>
-              <div class="dashboard-stat">
-                <div class="dashboard-stat-label">IP adresa</div>
-                <div class="dashboard-stat-value mono">185.203.114.42</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tab: Přístupy -->
-        <div id="tab-access" class="tab-content">
-          <div class="credential-row">
-            <span class="credential-label">SSH příkaz</span>
-            <span class="credential-value" id="ssh-cmd">ssh root@185.203.114.42</span>
-            <button class="btn btn-outline btn-sm" id="copy-ssh-btn" onclick="window.NH.copySSH()">Kopírovat</button>
-          </div>
-          <div class="credential-row">
-            <span class="credential-label">IPMI adresa</span>
-            <span class="credential-value">10.0.1.42</span>
-          </div>
-          <div class="credential-row">
-            <span class="credential-label">Root heslo</span>
-            <input type="password" value="xK9#mP2$vL5nQ8" id="root-password" class="credential-value" readonly style="border:1px solid var(--border); flex:1; font-family: var(--font-mono);">
-            <button class="btn btn-outline btn-sm" onclick="window.NH.togglePassword()">Zobrazit</button>
-          </div>
-        </div>
-
-        <!-- Tab: Hardware -->
-        <div id="tab-hardware" class="tab-content">
-          <table class="spec-table">
-            <tr><td>CPU</td><td>Intel Xeon E-2388G</td></tr>
-            <tr><td>Jádra / Vlákna</td><td>8C / 16T @ 3.2 GHz</td></tr>
-            <tr><td>RAM</td><td>64 GB DDR4 ECC 3200 MHz</td></tr>
-            <tr><td>Disk</td><td>2× 1 TB NVMe SSD (RAID 1)</td></tr>
-            <tr><td>Síť</td><td>1 Gbps unmetered</td></tr>
-            <tr><td>IPMI</td><td>Ano (dedikovaný port)</td></tr>
-            <tr><td>Lokace</td><td>Praha, CZ — DC Tower</td></tr>
-          </table>
-        </div>
-
-        <!-- Tab: Akce -->
-        <div id="tab-actions" class="tab-content">
-          <div class="actions-grid">
-            <div class="action-card">
-              <h4>Reboot serveru</h4>
-              <p>Provede okamžitý restart serveru. Server bude nedostupný přibližně 2 minuty.</p>
-              <button class="btn btn-outline btn-sm" id="reboot-btn" onclick="window.NH.showRebootConfirm()">Reboot</button>
-              <div class="confirm-dialog" id="reboot-confirm">
-                <p>Opravdu chcete restartovat server? Server bude po dobu restartu nedostupný.</p>
-                <div class="btn-row">
-                  <button class="btn btn-danger btn-sm" onclick="window.NH.confirmReboot()">Ano, restartovat</button>
-                  <button class="btn btn-outline btn-sm" onclick="window.NH.hideRebootConfirm()">Zrušit</button>
-                </div>
-              </div>
-              <div class="inline-msg" id="reboot-msg">Reboot zahájen. Server bude dostupný za ~2 minuty.</div>
-            </div>
-
-            <div class="action-card">
-              <h4>Reinstalace OS</h4>
-              <p>Přeinstaluje operační systém. Všechna data na disku budou smazána.</p>
-              <select style="margin-bottom: var(--space-3); max-width:240px; width: 100%;">
-                <option>Debian 12</option>
-                <option>Ubuntu 24.04 LTS</option>
-                <option>Rocky Linux 9</option>
-                <option>AlmaLinux 9</option>
-                <option>Proxmox VE 8</option>
-              </select>
-              <div style="font-size:12px; color:var(--danger); margin-bottom:var(--space-3);">⚠ Tato akce je nevratná. Všechna data budou ztracena.</div>
-              <button class="btn btn-danger btn-sm">Reinstalovat</button>
-            </div>
-
-            <div class="action-card">
-              <h4>Prodloužit službu</h4>
-              <p>Prodlužte pronájem o další období. Aktuální platnost: 31. 8. 2026.</p>
-              <button class="btn btn-primary btn-sm">Prodloužit</button>
-            </div>
-
-            <div class="action-card">
-              <h4>Zrušit službu</h4>
-              <p>Zrušit pronájem ke konci aktuálního fakturačního období.</p>
-              <button class="btn btn-danger btn-sm">Zrušit službu</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      <!-- ===================================================================
-           SCREEN: PORTAL INVOICES
-           =================================================================== -->
-      <section id="screen-portal-invoices" class="screen">
-        <div class="portal-topbar">
-          <h1>Faktury</h1>
-        </div>
-        <div class="dashboard-card" style="padding:0; overflow:hidden;">
-          <table class="invoice-table">
-            <thead>
-              <tr>
-                <th>Datum</th>
-                <th>Číslo faktury</th>
-                <th>Popis</th>
-                <th>Částka</th>
-                <th>Stav</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1. 8. 2026</td>
-                <td class="invoice-number">FV-2026-0042</td>
-                <td>DS-PRO — srpen 2026</td>
-                <td class="invoice-amount">3 490 Kč</td>
-                <td><span class="badge badge-pending">Čeká</span></td>
-                <td><button class="btn btn-outline btn-sm">Stáhnout PDF</button></td>
-              </tr>
-              <tr>
-                <td>1. 7. 2026</td>
-                <td class="invoice-number">FV-2026-0038</td>
-                <td>DS-PRO — červenec 2026</td>
-                <td class="invoice-amount">3 490 Kč</td>
-                <td><span class="badge badge-paid">Zaplaceno</span></td>
-                <td><button class="btn btn-outline btn-sm">Stáhnout PDF</button></td>
-              </tr>
-              <tr>
-                <td>1. 6. 2026</td>
-                <td class="invoice-number">FV-2026-0031</td>
-                <td>DS-PRO — červen 2026</td>
-                <td class="invoice-amount">3 490 Kč</td>
-                <td><span class="badge badge-paid">Zaplaceno</span></td>
-                <td><button class="btn btn-outline btn-sm">Stáhnout PDF</button></td>
-              </tr>
-              <tr>
-                <td>1. 5. 2026</td>
-                <td class="invoice-number">FV-2026-0024</td>
-                <td>DS-PRO — květen 2026</td>
-                <td class="invoice-amount">3 490 Kč</td>
-                <td><span class="badge badge-paid">Zaplaceno</span></td>
-                <td><button class="btn btn-outline btn-sm">Stáhnout PDF</button></td>
-              </tr>
-              <tr>
-                <td>1. 4. 2026</td>
-                <td class="invoice-number">FV-2026-0017</td>
-                <td>DS-PRO — duben 2026</td>
-                <td class="invoice-amount">3 490 Kč</td>
-                <td><span class="badge badge-paid">Zaplaceno</span></td>
-                <td><button class="btn btn-outline btn-sm">Stáhnout PDF</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
     </div>
   </div>
+</section>
 
-  <!-- App logic -->
-  <script src="/js/app.js"></script>
+<!-- ===== CHECKOUT ===== -->
+<section id="screen-checkout" class="screen">
+  <div class="container section">
+    <h2 class="section-title">Dokončení objednávky</h2>
+    <p class="section-sub" style="margin:0 0 var(--space-7)">Vyplňte kontaktní údaje pro fakturu a předání přístupů.</p>
+    <div class="co-grid">
+      <div>
+        <div class="fr">
+          <div class="fg"><label class="fl">Jméno a příjmení</label><input type="text" placeholder="Jan Novák" autocomplete="name"></div>
+          <div class="fg"><label class="fl">Firma <span class="opt">(nepovinné)</span></label><input type="text" placeholder="Acme s.r.o." autocomplete="organization"></div>
+        </div>
+        <div class="fr">
+          <div class="fg"><label class="fl">E-mail</label><input type="email" placeholder="jan@example.cz" autocomplete="email"></div>
+          <div class="fg"><label class="fl">Telefon</label><input type="tel" placeholder="+420 123 456 789" autocomplete="tel"></div>
+        </div>
+        <div class="fr">
+          <div class="fg"><label class="fl">IČO <span class="opt">(nepovinné)</span></label><input type="text" placeholder="12345678"></div>
+          <div class="fg"><label class="fl">DIČ <span class="opt">(nepovinné)</span></label><input type="text" placeholder="CZ12345678"></div>
+        </div>
+        <div class="co-agree"><input type="checkbox" id="agr"><label for="agr">Souhlasím s <a href="#">obchodními podmínkami</a> a <a href="#">zpracováním osobních údajů</a>.</label></div>
+        <button class="btn btn-cta btn-lg" style="width:100%;max-width:320px" onclick="NH.toPayment()">Přejít k platbě →</button>
+      </div>
+      <div class="summary" id="summary"></div>
+    </div>
+  </div>
+</section>
 
+<!-- ===== PENDING ===== -->
+<section id="screen-pending" class="screen">
+  <div class="center">
+    <div class="spinner"></div>
+    <h2>Zpracováváme platbu…</h2>
+    <p>Neopouštějte tuto stránku. Budete přesměrováni automaticky.</p>
+  </div>
+</section>
+
+<!-- ===== CONFIRMED ===== -->
+<section id="screen-confirmed" class="screen">
+  <div class="center">
+    <div class="check">✓</div>
+    <h2>Objednávka přijata</h2>
+    <p>Děkujeme. Server bude aktivován do 30 minut, přístupové údaje obdržíte na e-mail.</p>
+    <div class="confirmed-box" id="conf-box"></div>
+    <button class="btn btn-cta btn-lg" onclick="NH.showPortal('dash')">Přejít do portálu →</button>
+  </div>
+</section>
+
+<!-- ===== PORTAL ===== -->
+<div id="portal">
+  <aside class="psb">
+    <div class="psb-logo">Nord<span>Host</span></div>
+    <ul class="psb-nav">
+      <li><a href="#" class="active" onclick="NH.showPortal('dash');return false" data-pid="dash">◻ Moje služby</a></li>
+      <li><a href="#" onclick="NH.showPortal('inv');return false" data-pid="inv">▤ Faktury</a></li>
+      <li><a href="#" onclick="return false">✉ Podpora</a></li>
+      <li><a href="#" onclick="return false">⚙ Nastavení</a></li>
+    </ul>
+    <div class="psb-bot">
+      <div class="psb-user"><div class="psb-avatar">JN</div><div><div class="psb-uname">Jan Novák</div><div class="psb-uco">Acme s.r.o.</div></div></div>
+      <button class="btn btn-outline btn-sm" style="width:100%" onclick="NH.show('landing')">Odhlásit se</button>
+    </div>
+  </aside>
+  <div class="pmain">
+    <section id="screen-dash" class="screen">
+      <div class="ptop"><h1>Moje služby</h1><button class="icon-btn" onclick="NH.toggleMode()">◐</button></div>
+      <div class="dash">
+        <div class="dash-h"><span class="dash-name">DS-PRO</span><span class="badge badge-ok">Aktivní</span></div>
+        <div class="dash-stats">
+          <div><div class="dash-l">IP adresa</div><div class="dash-v mono">185.203.114.42</div></div>
+          <div><div class="dash-l">Lokace</div><div class="dash-v">Praha, CZ</div></div>
+          <div><div class="dash-l">Platnost do</div><div class="dash-v">31. 8. 2026</div></div>
+        </div>
+        <div class="dash-acts">
+          <button class="btn btn-outline btn-sm" onclick="NH.showPortal('srv')">Detail serveru</button>
+          <button class="btn btn-outline btn-sm" onclick="NH.showPortal('srv');setTimeout(()=>NH.tab('tab-acts'),100)">Reboot</button>
+          <button class="btn btn-outline btn-sm" onclick="NH.showPortal('srv');setTimeout(()=>NH.tab('tab-acc'),100)">Přístupy</button>
+          <button class="btn btn-outline btn-sm" onclick="NH.showPortal('inv')">Faktury</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-srv" class="screen">
+      <div class="ptop"><h1>DS-PRO — Detail serveru</h1><button class="btn btn-outline btn-sm" onclick="NH.showPortal('dash')">← Zpět</button></div>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="NH.tab('tab-ovw')">Přehled</button>
+        <button class="tab-btn" onclick="NH.tab('tab-acc')">Přístupy</button>
+        <button class="tab-btn" onclick="NH.tab('tab-hw')">Hardware</button>
+        <button class="tab-btn" onclick="NH.tab('tab-acts')">Akce</button>
+      </div>
+      <div id="tab-ovw" class="tab-c active">
+        <div class="dash">
+          <div class="dash-stats" style="margin:0;padding:0;border:0">
+            <div><div class="dash-l">Stav</div><div class="dash-v"><span class="badge badge-ok">Aktivní</span></div></div>
+            <div><div class="dash-l">Uptime</div><div class="dash-v mono">47d 13h 22m</div></div>
+            <div><div class="dash-l">IP</div><div class="dash-v mono">185.203.114.42</div></div>
+          </div>
+        </div>
+      </div>
+      <div id="tab-acc" class="tab-c">
+        <div class="cred"><span class="cred-l">SSH příkaz</span><span class="cred-v" id="ssh-cmd">ssh root@185.203.114.42</span><button class="btn btn-outline btn-sm" id="ssh-btn" onclick="NH.copySSH()">Kopírovat</button></div>
+        <div class="cred"><span class="cred-l">IPMI adresa</span><span class="cred-v">10.0.1.42</span></div>
+        <div class="cred"><span class="cred-l">Root heslo</span><input type="password" value="xK9#mP2$vL5nQ8" id="rpw" class="cred-v" readonly><button class="btn btn-outline btn-sm" onclick="NH.togglePw()">Zobrazit</button></div>
+      </div>
+      <div id="tab-hw" class="tab-c">
+        <table class="spec-tbl">
+          <tr><td>CPU</td><td>Intel Xeon E-2388G</td></tr>
+          <tr><td>Jádra / Vlákna</td><td>8C / 16T @ 3.2 GHz</td></tr>
+          <tr><td>RAM</td><td>64 GB DDR4 ECC 3200 MHz</td></tr>
+          <tr><td>Disk</td><td>2× 1 TB NVMe SSD (RAID 1)</td></tr>
+          <tr><td>Síť</td><td>1 Gbps unmetered</td></tr>
+          <tr><td>IPMI</td><td>Ano (dedikovaný port)</td></tr>
+          <tr><td>Lokace</td><td>Praha, CZ — DC Tower</td></tr>
+        </table>
+      </div>
+      <div id="tab-acts" class="tab-c">
+        <div class="acts">
+          <div class="act"><h4>Reboot serveru</h4><p>Okamžitý restart. Nedostupný ~2 minuty.</p>
+            <button class="btn btn-outline btn-sm" onclick="NH.rbShow()">Reboot</button>
+            <div class="confirm-d" id="rb-c"><p>Opravdu restartovat?</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-danger btn-sm" onclick="NH.rbDo()">Ano, restartovat</button><button class="btn btn-outline btn-sm" onclick="NH.rbHide()">Zrušit</button></div></div>
+            <div class="inline-msg" id="rb-m">Reboot zahájen. Server bude dostupný za ~2 minuty.</div>
+          </div>
+          <div class="act"><h4>Reinstalace OS</h4><p>Přeinstaluje OS. Data budou smazána.</p>
+            <select style="margin-bottom:12px;max-width:240px;width:100%"><option>Debian 12</option><option>Ubuntu 24.04 LTS</option><option>Rocky Linux 9</option><option>AlmaLinux 9</option><option>Proxmox VE 8</option></select>
+            <div style="font-size:12px;color:var(--danger);margin-bottom:12px">⚠ Akce je nevratná.</div>
+            <button class="btn btn-danger btn-sm">Reinstalovat</button>
+          </div>
+          <div class="act"><h4>Prodloužit službu</h4><p>Aktuální platnost: 31. 8. 2026.</p><button class="btn btn-cta btn-sm">Prodloužit</button></div>
+          <div class="act"><h4>Zrušit službu</h4><p>Zrušit ke konci aktuálního období.</p><button class="btn btn-danger btn-sm">Zrušit službu</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-inv" class="screen">
+      <div class="ptop"><h1>Faktury</h1></div>
+      <div class="dash" style="padding:0;overflow:hidden">
+        <table class="inv-tbl">
+          <thead><tr><th>Datum</th><th>Číslo</th><th>Popis</th><th>Částka</th><th>Stav</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>1. 8. 2026</td><td class="inv-num">FV-2026-0042</td><td>DS-PRO srpen 2026</td><td class="inv-amt">3 490 Kč</td><td><span class="badge badge-warn">Čeká</span></td><td><button class="btn btn-outline btn-sm">PDF</button></td></tr>
+            <tr><td>1. 7. 2026</td><td class="inv-num">FV-2026-0038</td><td>DS-PRO červenec 2026</td><td class="inv-amt">3 490 Kč</td><td><span class="badge badge-ok">Zaplaceno</span></td><td><button class="btn btn-outline btn-sm">PDF</button></td></tr>
+            <tr><td>1. 6. 2026</td><td class="inv-num">FV-2026-0031</td><td>DS-PRO červen 2026</td><td class="inv-amt">3 490 Kč</td><td><span class="badge badge-ok">Zaplaceno</span></td><td><button class="btn btn-outline btn-sm">PDF</button></td></tr>
+            <tr><td>1. 5. 2026</td><td class="inv-num">FV-2026-0024</td><td>DS-PRO květen 2026</td><td class="inv-amt">3 490 Kč</td><td><span class="badge badge-ok">Zaplaceno</span></td><td><button class="btn btn-outline btn-sm">PDF</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+// === DATA ===
+const servers=[
+{id:'ds-entry',name:'DS-ENTRY',sub:'Webhosting, VPN, menší projekty',cpu:'Intel Xeon E-2236',cpuD:'Intel Xeon E-2236 (6C/12T @ 3.4 GHz)',cores:'6C / 12T',ram:'32 GB DDR4 ECC',ramD:'32 GB DDR4 ECC 2666 MHz (2× 16 GB)',disk:'2× 512 GB NVMe SSD',diskD:'2× 512 GB NVMe SSD (Samsung PM9A3)',net:'1 Gbps',netD:'1 Gbps unmetered, 1× IPv4, /64 IPv6',ipmi:'Ano',loc:'Praha, CZ — DC Tower',price:1990,status:'available'},
+{id:'ds-pro',name:'DS-PRO',sub:'Produkční nasazení a databáze',cpu:'Intel Xeon E-2388G',cpuD:'Intel Xeon E-2388G (8C/16T @ 3.2 GHz)',cores:'8C / 16T',ram:'64 GB DDR4 ECC',ramD:'64 GB DDR4 ECC 3200 MHz (2× 32 GB)',disk:'2× 1 TB NVMe SSD',diskD:'2× 1 TB NVMe SSD (Samsung PM9A3, RAID 1)',net:'1 Gbps',netD:'1 Gbps unmetered, 2× IPv4, /64 IPv6',ipmi:'Ano',loc:'Praha, CZ — DC Tower',price:3490,status:'available'},
+{id:'ds-power',name:'DS-POWER',sub:'HPC, rendering, large-scale',cpu:'AMD EPYC 7443P',cpuD:'AMD EPYC 7443P (24C/48T @ 2.85 GHz)',cores:'24C / 48T',ram:'128 GB DDR4 ECC',ramD:'128 GB DDR4 ECC 3200 MHz (4× 32 GB)',disk:'2× 2 TB NVMe SSD',diskD:'2× 2 TB NVMe SSD (Micron 7450 PRO, RAID 1)',net:'10 Gbps',netD:'10 Gbps unmetered, 4× IPv4, /48 IPv6',ipmi:'Ano',loc:'Frankfurt, DE — Equinix FR5',price:7990,status:'last'},
+{id:'ds-storage',name:'DS-STORAGE',sub:'Velkokapacitní úložiště, backup',cpu:'Intel Xeon E-2336',cpuD:'Intel Xeon E-2336 (6C/12T @ 2.9 GHz)',cores:'6C / 12T',ram:'32 GB DDR4 ECC',ramD:'32 GB DDR4 ECC 3200 MHz',disk:'4× 4 TB HDD + 512 GB NVMe',diskD:'4× 4 TB SATA HDD (RAID 10) + 512 GB NVMe cache',net:'1 Gbps',netD:'1 Gbps unmetered, 1× IPv4',ipmi:'Ano',loc:'Praha, CZ — DC Tower',price:3290,status:'sold'},
+{id:'ds-gpu',name:'DS-GPU',sub:'GPU akcelerace pro ML/AI',cpu:'AMD EPYC 7313P',cpuD:'AMD EPYC 7313P (16C/32T @ 3.0 GHz)',cores:'16C / 32T',ram:'128 GB DDR4 ECC',ramD:'128 GB DDR4 ECC 3200 MHz',disk:'2× 1 TB NVMe SSD',diskD:'2× 1 TB NVMe SSD + NVIDIA A4000 16GB',net:'10 Gbps',netD:'10 Gbps unmetered, 2× IPv4, /48 IPv6',ipmi:'Ano',loc:'Frankfurt, DE — Equinix FR5',price:12990,status:'available'}
+];
+const periods=[{m:1,l:'1 měsíc',d:0},{m:3,l:'3 měsíce',d:5},{m:6,l:'6 měsíců',d:10},{m:12,l:'12 měsíců',d:15}];
+let sel=null,selP=periods[0];
+const fp=n=>n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+
+// === NAVIGATION ===
+function show(id){
+  document.getElementById('portal').style.display='none';
+  document.getElementById('public-nav').style.display='';
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const t=document.getElementById('screen-'+id);
+  if(t)t.classList.add('active');
+  window.scrollTo(0,0);
+}
+function showPortal(pid){
+  document.getElementById('public-nav').style.display='none';
+  document.getElementById('portal').style.display='flex';
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const t=document.getElementById('screen-'+pid);
+  if(t)t.classList.add('active');
+  document.querySelectorAll('.psb-nav a').forEach(a=>a.classList.toggle('active',a.dataset.pid===pid));
+  window.scrollTo(0,0);
+}
+
+// === THEME (light default + dark opt-in) ===
+function toggleMode(){
+  const r=document.documentElement;
+  r.classList.toggle('dark');
+  try{localStorage.setItem('mode',r.classList.contains('dark')?'dark':'light')}catch(_){}
+}
+function initMode(){
+  try{if(localStorage.getItem('mode')==='dark')document.documentElement.classList.add('dark')}catch(_){}
+}
+
+// === LANG (UI only) ===
+const LANGS=['cs','en','de'];
+function setLang(l){
+  document.documentElement.lang=l;
+  try{localStorage.setItem('lang',l)}catch(_){}
+  document.querySelectorAll('[data-lang]').forEach(e=>e.classList.toggle('active',e.dataset.lang===l));
+  const lbl=document.querySelector('[data-lang-label]');
+  if(lbl)lbl.textContent=l.toUpperCase();
+}
+function initLang(){
+  let l='cs';
+  try{
+    const s=localStorage.getItem('lang');
+    if(s&&LANGS.includes(s))l=s;
+    else{const b=(navigator.language||'cs').toLowerCase().split('-')[0];if(LANGS.includes(b))l=b}
+  }catch(_){}
+  setLang(l);
+}
+
+// === DROPDOWN ===
+function toggleDD(id){
+  document.querySelectorAll('.dropdown.open').forEach(d=>{if(d.id!==id)d.classList.remove('open')});
+  const d=document.getElementById(id);if(d)d.classList.toggle('open');
+}
+function initDD(){
+  document.addEventListener('click',e=>{
+    if(!e.target.closest('.dropdown'))document.querySelectorAll('.dropdown.open').forEach(d=>d.classList.remove('open'));
+  });
+}
+
+// === CATALOG ===
+function renderCatalog(){
+  const g=document.getElementById('cat-grid');if(!g)return;
+  g.innerHTML=servers.map(s=>{
+    const b={available:'<span class="badge badge-ok">Dostupné</span>',last:'<span class="badge badge-warn">Poslední kus</span>',sold:'<span class="badge badge-bad">Obsazeno</span>'}[s.status];
+    const sold=s.status==='sold';
+    return `<div class="cat-card${sold?' sold':''}" ${sold?'aria-disabled="true"':`onclick="NH.selectServer('${s.id}')" tabindex="0" role="button"`}>
+      <div class="cat-head"><span class="cat-name">${s.name}</span>${b}</div>
+      <div class="cat-specs">
+        <div class="cat-spec"><span class="cat-spec-l">CPU</span><span class="cat-spec-v">${s.cpu}</span></div>
+        <div class="cat-spec"><span class="cat-spec-l">RAM</span><span class="cat-spec-v">${s.ram}</span></div>
+        <div class="cat-spec"><span class="cat-spec-l">Disk</span><span class="cat-spec-v">${s.disk}</span></div>
+        <div class="cat-spec"><span class="cat-spec-l">Síť</span><span class="cat-spec-v">${s.net}</span></div>
+      </div>
+      <div class="cat-foot"><div class="cat-price">${fp(s.price)} <span>Kč/měs.</span></div><button class="btn btn-cta btn-sm" ${sold?'disabled':''}>${sold?'Obsazeno':'Vybrat'}</button></div>
+    </div>`;
+  }).join('');
+}
+
+// === DETAIL ===
+function selectServer(id){
+  sel=servers.find(s=>s.id===id);if(!sel)return;
+  selP=periods[0];
+  document.getElementById('d-name').textContent=sel.name;
+  document.getElementById('d-sub').textContent=sel.sub;
+  document.getElementById('d-tbl').innerHTML=`
+    <tr><td>CPU</td><td>${sel.cpuD}</td></tr>
+    <tr><td>Jádra / Vlákna</td><td>${sel.cores}</td></tr>
+    <tr><td>RAM</td><td>${sel.ramD}</td></tr>
+    <tr><td>Disky</td><td>${sel.diskD}</td></tr>
+    <tr><td>Síť</td><td>${sel.netD}</td></tr>
+    <tr><td>IPMI</td><td>${sel.ipmi}</td></tr>
+    <tr><td>Lokace</td><td>${sel.loc}</td></tr>`;
+  renderPeriods();updatePrice();show('detail');
+}
+function renderPeriods(){
+  document.getElementById('p-sel').innerHTML=periods.map((p,i)=>`<button class="period-btn${i===0?' active':''}" onclick="NH.selectPeriod(${i})">${p.l}${p.d>0?`<span class="period-disc">−${p.d}&nbsp;%</span>`:''}</button>`).join('');
+}
+function selectPeriod(i){
+  selP=periods[i];
+  document.querySelectorAll('.period-btn').forEach((b,j)=>b.classList.toggle('active',i===j));
+  updatePrice();
+}
+function updatePrice(){
+  if(!sel)return;
+  const d=Math.round(sel.price*(1-selP.d/100));
+  document.getElementById('p-name').textContent=sel.name;
+  document.getElementById('p-amt').innerHTML=`${fp(d)} <span>Kč/měs.</span>`;
+  document.getElementById('p-orig').textContent=selP.d>0?`${fp(sel.price)} Kč/měs. původně`:'';
+}
+
+// === CHECKOUT ===
+function toCheckout(){
+  if(!sel)return;
+  const d=Math.round(sel.price*(1-selP.d/100));const t=d*selP.m;
+  document.getElementById('summary').innerHTML=`<h3>Shrnutí objednávky</h3>
+    <div class="sum-row"><span class="l">Server</span><span>${sel.name}</span></div>
+    <div class="sum-row"><span class="l">Konfigurace</span><span>${sel.cpu}</span></div>
+    <div class="sum-row"><span class="l">RAM / Disk</span><span>${sel.ram} / ${sel.disk}</span></div>
+    <div class="sum-row"><span class="l">Délka pronájmu</span><span>${selP.m} měs.</span></div>
+    <div class="sum-row"><span class="l">Cena za měsíc</span><span>${fp(d)} Kč</span></div>
+    ${selP.d>0?`<div class="sum-row"><span class="l">Sleva</span><span style="color:var(--success)">−${selP.d}&nbsp;%</span></div>`:''}
+    <div class="sum-row total"><span>Celkem</span><span>${fp(t)} Kč</span></div>`;
+  show('checkout');
+}
+function toPayment(){
+  show('pending');
+  setTimeout(()=>{
+    const d=Math.round(sel.price*(1-selP.d/100));const t=d*selP.m;
+    document.getElementById('conf-box').innerHTML=`
+      <div class="sum-row"><span class="l">Server</span><span>${sel.name}</span></div>
+      <div class="sum-row"><span class="l">Délka</span><span>${selP.m} měs.</span></div>
+      <div class="sum-row"><span class="l">Zaplaceno</span><span>${fp(t)} Kč</span></div>
+      <div class="sum-row"><span class="l">Aktivace</span><span>do 30 minut</span></div>
+      <div class="sum-row"><span class="l">Přístupy</span><span>email do 30 min</span></div>`;
+    show('confirmed');
+  },2400);
+}
+
+// === PORTAL ACTIONS ===
+function tab(id){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-c').forEach(c=>c.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const tabs=['tab-ovw','tab-acc','tab-hw','tab-acts'];const i=tabs.indexOf(id);
+  if(i>=0)document.querySelectorAll('.tab-btn')[i].classList.add('active');
+}
+function copySSH(){
+  const c=document.getElementById('ssh-cmd').textContent;
+  if(navigator.clipboard)navigator.clipboard.writeText(c).catch(()=>{});
+  const b=document.getElementById('ssh-btn');const o=b.textContent;
+  b.textContent='Zkopírováno ✓';setTimeout(()=>b.textContent=o,2000);
+}
+function togglePw(){
+  const i=document.getElementById('rpw');const b=i.nextElementSibling;
+  if(i.type==='password'){i.type='text';b.textContent='Skrýt'}else{i.type='password';b.textContent='Zobrazit'}
+}
+function rbShow(){document.getElementById('rb-c').classList.add('show');document.getElementById('rb-m').classList.remove('show')}
+function rbHide(){document.getElementById('rb-c').classList.remove('show')}
+function rbDo(){document.getElementById('rb-c').classList.remove('show');document.getElementById('rb-m').classList.add('show');setTimeout(()=>document.getElementById('rb-m').classList.remove('show'),5000)}
+
+// === EXPORT ===
+window.NH={show,showPortal,toggleMode,setLang,toggleDD,selectServer,selectPeriod,toCheckout,toPayment,tab,copySSH,togglePw,rbShow,rbHide,rbDo};
+
+// === INIT ===
+initMode();initLang();
+function boot(){renderCatalog();initDD();}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
+</script>
 </body>
 </html>
