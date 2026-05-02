@@ -1,0 +1,62 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-nordhost
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to nordhost.2marsa.cz
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install rsync (runner)
+        run: sudo apt-get install -y rsync
+
+      - name: Setup SSH
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Verify SSH + rsync na VPS
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/deploy_key -p "${{ secrets.VPS_PORT }}" \
+            "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
+            "command -v rsync >/dev/null 2>&1 || { echo 'CHYBA: rsync není na VPS — sudo apt install rsync'; exit 12; }; \
+             test -d /var/www/nordhost || { echo 'CHYBA: /var/www/nordhost neexistuje — viz README'; exit 1; }; \
+             echo SSH_OK && whoami && rsync --version | head -1"
+
+      - name: Deploy
+        run: |
+          set -euo pipefail
+          rsync -avz --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.gitignore' \
+            --exclude='README.md' \
+            --exclude='*.md' \
+            -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.VPS_PORT }}" \
+            ./ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}":/var/www/nordhost/
+
+      - name: Smoke test
+        run: |
+          set -euo pipefail
+          STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 https://nordhost.2marsa.cz/ || echo 000)
+          echo "HTTP $STATUS"
+          test "$STATUS" = "200" || { echo "Web neodpovídá 200"; exit 1; }

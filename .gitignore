@@ -1,0 +1,12 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*~
+
+# Lokální tajemství / poznámky
+.env
+.env.local
+NOTES.md
