@@ -56,10 +56,21 @@ Repo sleduje stejný pattern jako ostatní weby v `_REPO/web/` (Helix, PBSMB, ss
 
 ## Vlastnosti webu
 
-- Single-file HTML (~60 KB), inline CSS i JS
-- Externí závislosti: pouze Google Fonts (IBM Plex Sans + Mono)
-- Responsive, dark/light mode toggle
+- Statický web rozdělený do `index.html` + `css/style.css` + `js/app.js`
+- Single-page demo flow: landing → katalog (5 serverů) → detail → checkout → potvrzení → portál (dashboard, server detail s tabs, faktury)
+- Externí závislosti: pouze Google Fonts (Inter + Space Grotesk + JetBrains Mono)
+- Responsive, dark/light mode toggle s persistencí přes `localStorage`
 - Žádný build krok, žádné `node_modules`
+
+## Sekce
+
+- Hero s gradientem + animovaný terminál cursor
+- Trust strip (uptime / aktivace / DC / support)
+- Why NordHost — 6 USP karet
+- Jak to funguje — 3-step process
+- Datová centra — Praha CZ, Frankfurt DE
+- FAQ (8 otázek, native `<details>`)
+- Final CTA + footer
 
 ## Co dál (až bude potřeba)
 
