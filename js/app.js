@@ -1,6 +1,7 @@
 /* =============================================================================
    NORDHOST — App logic
    SPA s router-like screen switching, demo flow + portál.
+   Multi-theme (mode + brand) + language switcher (UI only).
    ============================================================================= */
 
 (function () {
@@ -11,94 +12,49 @@
   // ---------------------------------------------------------------------------
   const servers = [
     {
-      id: 'ds-entry',
-      name: 'DS-ENTRY',
+      id: 'ds-entry', name: 'DS-ENTRY',
       subtitle: 'Ideální pro webhosting, VPN a menší projekty',
-      cpu: 'Intel Xeon E-2236',
-      cpuDetail: 'Intel Xeon E-2236 (6C/12T @ 3.4 GHz)',
-      cores: '6C / 12T',
-      ram: '32 GB DDR4 ECC',
-      ramDetail: '32 GB DDR4 ECC 2666 MHz (2× 16 GB)',
-      disk: '2× 512 GB NVMe SSD',
-      diskDetail: '2× 512 GB NVMe SSD (Samsung PM9A3)',
-      net: '1 Gbps',
-      netDetail: '1 Gbps unmetered, 1× IPv4, /64 IPv6',
-      ipmi: 'Ano',
-      location: 'Praha, CZ — DC Tower',
-      price: 1990,
-      status: 'available'
+      cpu: 'Intel Xeon E-2236', cpuDetail: 'Intel Xeon E-2236 (6C/12T @ 3.4 GHz)', cores: '6C / 12T',
+      ram: '32 GB DDR4 ECC', ramDetail: '32 GB DDR4 ECC 2666 MHz (2× 16 GB)',
+      disk: '2× 512 GB NVMe SSD', diskDetail: '2× 512 GB NVMe SSD (Samsung PM9A3)',
+      net: '1 Gbps', netDetail: '1 Gbps unmetered, 1× IPv4, /64 IPv6',
+      ipmi: 'Ano', location: 'Praha, CZ — DC Tower', price: 1990, status: 'available'
     },
     {
-      id: 'ds-pro',
-      name: 'DS-PRO',
+      id: 'ds-pro', name: 'DS-PRO',
       subtitle: 'Výkonný server pro produkční nasazení a databáze',
-      cpu: 'Intel Xeon E-2388G',
-      cpuDetail: 'Intel Xeon E-2388G (8C/16T @ 3.2 GHz)',
-      cores: '8C / 16T',
-      ram: '64 GB DDR4 ECC',
-      ramDetail: '64 GB DDR4 ECC 3200 MHz (2× 32 GB)',
-      disk: '2× 1 TB NVMe SSD',
-      diskDetail: '2× 1 TB NVMe SSD (Samsung PM9A3, RAID 1)',
-      net: '1 Gbps',
-      netDetail: '1 Gbps unmetered, 2× IPv4, /64 IPv6',
-      ipmi: 'Ano',
-      location: 'Praha, CZ — DC Tower',
-      price: 3490,
-      status: 'available'
+      cpu: 'Intel Xeon E-2388G', cpuDetail: 'Intel Xeon E-2388G (8C/16T @ 3.2 GHz)', cores: '8C / 16T',
+      ram: '64 GB DDR4 ECC', ramDetail: '64 GB DDR4 ECC 3200 MHz (2× 32 GB)',
+      disk: '2× 1 TB NVMe SSD', diskDetail: '2× 1 TB NVMe SSD (Samsung PM9A3, RAID 1)',
+      net: '1 Gbps', netDetail: '1 Gbps unmetered, 2× IPv4, /64 IPv6',
+      ipmi: 'Ano', location: 'Praha, CZ — DC Tower', price: 3490, status: 'available'
     },
     {
-      id: 'ds-power',
-      name: 'DS-POWER',
+      id: 'ds-power', name: 'DS-POWER',
       subtitle: 'Maximální výkon pro HPC, rendering a large-scale aplikace',
-      cpu: 'AMD EPYC 7443P',
-      cpuDetail: 'AMD EPYC 7443P (24C/48T @ 2.85 GHz)',
-      cores: '24C / 48T',
-      ram: '128 GB DDR4 ECC',
-      ramDetail: '128 GB DDR4 ECC 3200 MHz (4× 32 GB)',
-      disk: '2× 2 TB NVMe SSD',
-      diskDetail: '2× 2 TB NVMe SSD (Micron 7450 PRO, RAID 1)',
-      net: '10 Gbps',
-      netDetail: '10 Gbps unmetered, 4× IPv4, /48 IPv6',
-      ipmi: 'Ano',
-      location: 'Frankfurt, DE — Equinix FR5',
-      price: 7990,
-      status: 'last'
+      cpu: 'AMD EPYC 7443P', cpuDetail: 'AMD EPYC 7443P (24C/48T @ 2.85 GHz)', cores: '24C / 48T',
+      ram: '128 GB DDR4 ECC', ramDetail: '128 GB DDR4 ECC 3200 MHz (4× 32 GB)',
+      disk: '2× 2 TB NVMe SSD', diskDetail: '2× 2 TB NVMe SSD (Micron 7450 PRO, RAID 1)',
+      net: '10 Gbps', netDetail: '10 Gbps unmetered, 4× IPv4, /48 IPv6',
+      ipmi: 'Ano', location: 'Frankfurt, DE — Equinix FR5', price: 7990, status: 'last'
     },
     {
-      id: 'ds-storage',
-      name: 'DS-STORAGE',
+      id: 'ds-storage', name: 'DS-STORAGE',
       subtitle: 'Optimalizováno pro velkokapacitní úložiště a backup',
-      cpu: 'Intel Xeon E-2336',
-      cpuDetail: 'Intel Xeon E-2336 (6C/12T @ 2.9 GHz)',
-      cores: '6C / 12T',
-      ram: '32 GB DDR4 ECC',
-      ramDetail: '32 GB DDR4 ECC 3200 MHz (2× 16 GB)',
-      disk: '4× 4 TB HDD + 512 GB NVMe',
-      diskDetail: '4× 4 TB SATA HDD (RAID 10) + 512 GB NVMe cache',
-      net: '1 Gbps',
-      netDetail: '1 Gbps unmetered, 1× IPv4, /64 IPv6',
-      ipmi: 'Ano',
-      location: 'Praha, CZ — DC Tower',
-      price: 3290,
-      status: 'sold'
+      cpu: 'Intel Xeon E-2336', cpuDetail: 'Intel Xeon E-2336 (6C/12T @ 2.9 GHz)', cores: '6C / 12T',
+      ram: '32 GB DDR4 ECC', ramDetail: '32 GB DDR4 ECC 3200 MHz (2× 16 GB)',
+      disk: '4× 4 TB HDD + 512 GB NVMe', diskDetail: '4× 4 TB SATA HDD (RAID 10) + 512 GB NVMe cache',
+      net: '1 Gbps', netDetail: '1 Gbps unmetered, 1× IPv4, /64 IPv6',
+      ipmi: 'Ano', location: 'Praha, CZ — DC Tower', price: 3290, status: 'sold'
     },
     {
-      id: 'ds-gpu',
-      name: 'DS-GPU',
+      id: 'ds-gpu', name: 'DS-GPU',
       subtitle: 'GPU akcelerace pro ML/AI workloady a inference',
-      cpu: 'AMD EPYC 7313P',
-      cpuDetail: 'AMD EPYC 7313P (16C/32T @ 3.0 GHz)',
-      cores: '16C / 32T',
-      ram: '128 GB DDR4 ECC',
-      ramDetail: '128 GB DDR4 ECC 3200 MHz (4× 32 GB)',
-      disk: '2× 1 TB NVMe SSD',
-      diskDetail: '2× 1 TB NVMe SSD (Samsung PM9A3) + NVIDIA A4000 16GB',
-      net: '10 Gbps',
-      netDetail: '10 Gbps unmetered, 2× IPv4, /48 IPv6',
-      ipmi: 'Ano',
-      location: 'Frankfurt, DE — Equinix FR5',
-      price: 12990,
-      status: 'available'
+      cpu: 'AMD EPYC 7313P', cpuDetail: 'AMD EPYC 7313P (16C/32T @ 3.0 GHz)', cores: '16C / 32T',
+      ram: '128 GB DDR4 ECC', ramDetail: '128 GB DDR4 ECC 3200 MHz (4× 32 GB)',
+      disk: '2× 1 TB NVMe SSD', diskDetail: '2× 1 TB NVMe SSD (Samsung PM9A3) + NVIDIA A4000 16GB',
+      net: '10 Gbps', netDetail: '10 Gbps unmetered, 2× IPv4, /48 IPv6',
+      ipmi: 'Ano', location: 'Frankfurt, DE — Equinix FR5', price: 12990, status: 'available'
     }
   ];
 
@@ -121,7 +77,7 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const target = document.getElementById('screen-' + id);
     if (target) target.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    window.scrollTo(0, 0);
   }
 
   function showPortal(screenId) {
@@ -133,30 +89,99 @@
     document.querySelectorAll('.sidebar-nav a').forEach(a => {
       a.classList.toggle('active', a.dataset.portal === screenId);
     });
-    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    window.scrollTo(0, 0);
   }
 
-  function logout() {
-    showScreen('landing');
-  }
+  function logout() { showScreen('landing'); }
 
   // ---------------------------------------------------------------------------
-  // THEME TOGGLE — light je default (ZonerCloud styl), dark je opt-in
-  // s persistencí přes localStorage
+  // THEME — multi-theme: mode (light/dark) + brand (blue/green/purple)
   // ---------------------------------------------------------------------------
-  function toggleTheme() {
+  const BRANDS = ['blue', 'green', 'purple'];
+
+  function applyTheme(mode, brand) {
     const root = document.documentElement;
-    root.classList.toggle('dark');
+    root.classList.toggle('dark', mode === 'dark');
+    BRANDS.forEach(b => root.classList.toggle('theme-' + b, b === brand));
     try {
-      localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
+      localStorage.setItem('theme-mode', mode);
+      localStorage.setItem('theme-brand', brand);
     } catch (_) {}
+    document.querySelectorAll('[data-theme-mode]').forEach(el => {
+      el.classList.toggle('active', el.dataset.themeMode === mode);
+    });
+    document.querySelectorAll('[data-theme-brand]').forEach(el => {
+      el.classList.toggle('active', el.dataset.themeBrand === brand);
+    });
+  }
+
+  function setMode(mode) {
+    const brand = (localStorage.getItem('theme-brand') || 'blue');
+    applyTheme(mode, brand);
+  }
+
+  function setBrand(brand) {
+    const mode = (localStorage.getItem('theme-mode') || 'light');
+    applyTheme(mode, brand);
   }
 
   function initTheme() {
+    let mode = 'light', brand = 'blue';
     try {
-      const saved = localStorage.getItem('theme');
-      if (saved === 'dark') document.documentElement.classList.add('dark');
+      mode = localStorage.getItem('theme-mode') || 'light';
+      brand = localStorage.getItem('theme-brand') || 'blue';
     } catch (_) {}
+    applyTheme(mode, brand);
+  }
+
+  // ---------------------------------------------------------------------------
+  // LANGUAGE SWITCHER — UI only, default = navigator.language
+  // ---------------------------------------------------------------------------
+  const LANGS = ['cs', 'en', 'de'];
+
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    try { localStorage.setItem('lang', lang); } catch (_) {}
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.classList.toggle('active', el.dataset.lang === lang);
+    });
+    const label = document.querySelector('[data-lang-label]');
+    if (label) label.textContent = lang.toUpperCase();
+  }
+
+  function setLang(lang) { applyLang(lang); }
+
+  function initLang() {
+    let lang = 'cs';
+    try {
+      const saved = localStorage.getItem('lang');
+      if (saved && LANGS.includes(saved)) {
+        lang = saved;
+      } else {
+        const browser = (navigator.language || 'cs').toLowerCase().split('-')[0];
+        lang = LANGS.includes(browser) ? browser : 'cs';
+      }
+    } catch (_) {}
+    applyLang(lang);
+  }
+
+  // ---------------------------------------------------------------------------
+  // PICKER DROPDOWN
+  // ---------------------------------------------------------------------------
+  function togglePicker(pickerId) {
+    document.querySelectorAll('.picker.open').forEach(p => {
+      if (p.id !== pickerId) p.classList.remove('open');
+    });
+    const p = document.getElementById(pickerId);
+    if (p) p.classList.toggle('open');
+  }
+
+  function initPickers() {
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.picker')) {
+        document.querySelectorAll('.picker.open').forEach(p => p.classList.remove('open'));
+      }
+    });
   }
 
   // ---------------------------------------------------------------------------
@@ -171,9 +196,7 @@
         last:      '<span class="badge badge-last">Poslední kus</span>',
         sold:      '<span class="badge badge-sold">Obsazeno</span>'
       }[s.status];
-
       const isSold = s.status === 'sold';
-
       return `
         <div class="server-card ${isSold ? 'sold' : ''}"
              ${!isSold ? `onclick="window.NH.selectServer('${s.id}')" tabindex="0" role="button"` : 'aria-disabled="true"'}>
@@ -182,22 +205,10 @@
             ${statusBadge}
           </div>
           <div class="server-card-specs">
-            <div class="server-spec-row">
-              <span class="server-spec-label">CPU</span>
-              <span class="server-spec-value">${s.cpu}</span>
-            </div>
-            <div class="server-spec-row">
-              <span class="server-spec-label">RAM</span>
-              <span class="server-spec-value">${s.ram}</span>
-            </div>
-            <div class="server-spec-row">
-              <span class="server-spec-label">Disk</span>
-              <span class="server-spec-value">${s.disk}</span>
-            </div>
-            <div class="server-spec-row">
-              <span class="server-spec-label">Síť</span>
-              <span class="server-spec-value">${s.net}</span>
-            </div>
+            <div class="server-spec-row"><span class="server-spec-label">CPU</span><span class="server-spec-value">${s.cpu}</span></div>
+            <div class="server-spec-row"><span class="server-spec-label">RAM</span><span class="server-spec-value">${s.ram}</span></div>
+            <div class="server-spec-row"><span class="server-spec-label">Disk</span><span class="server-spec-value">${s.disk}</span></div>
+            <div class="server-spec-row"><span class="server-spec-label">Síť</span><span class="server-spec-value">${s.net}</span></div>
           </div>
           <div class="server-card-footer">
             <div class="server-price">${formatPrice(s.price)} <span>Kč/měs.</span></div>
@@ -207,7 +218,6 @@
       `;
     }).join('');
 
-    // Allow Enter/Space to activate cards (a11y)
     grid.querySelectorAll('[role="button"]').forEach(card => {
       card.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -224,12 +234,10 @@
   function selectServer(id) {
     selectedServer = servers.find(s => s.id === id);
     if (!selectedServer) return;
-
     selectedPeriod = periods[0];
 
     document.getElementById('detail-name').textContent = selectedServer.name;
     document.getElementById('detail-subtitle').textContent = selectedServer.subtitle;
-
     document.getElementById('detail-spec-table').innerHTML = `
       <tr><td>CPU</td><td>${selectedServer.cpuDetail}</td></tr>
       <tr><td>Jádra / Vlákna</td><td>${selectedServer.cores}</td></tr>
@@ -239,7 +247,6 @@
       <tr><td>IPMI</td><td>${selectedServer.ipmi}</td></tr>
       <tr><td>Lokace</td><td>${selectedServer.location}</td></tr>
     `;
-
     renderPeriodSelector();
     updatePriceDisplay();
     showScreen('server-detail');
@@ -269,17 +276,10 @@
     if (!selectedServer) return;
     const base = selectedServer.price;
     const discounted = Math.round(base * (1 - selectedPeriod.discount / 100));
-
     document.getElementById('price-card-name').textContent = selectedServer.name;
-    document.getElementById('price-display').innerHTML =
-      `${formatPrice(discounted)} <span>Kč/měs.</span>`;
-
+    document.getElementById('price-display').innerHTML = `${formatPrice(discounted)} <span>Kč/měs.</span>`;
     const originalEl = document.getElementById('price-original');
-    if (selectedPeriod.discount > 0) {
-      originalEl.textContent = `${formatPrice(base)} Kč/měs. původně`;
-    } else {
-      originalEl.textContent = '';
-    }
+    originalEl.textContent = selectedPeriod.discount > 0 ? `${formatPrice(base)} Kč/měs. původně` : '';
   }
 
   // ---------------------------------------------------------------------------
@@ -287,10 +287,8 @@
   // ---------------------------------------------------------------------------
   function goToCheckout() {
     if (!selectedServer) return;
-
     const discounted = Math.round(selectedServer.price * (1 - selectedPeriod.discount / 100));
     const total = discounted * selectedPeriod.months;
-
     document.getElementById('order-summary').innerHTML = `
       <h3>Shrnutí objednávky</h3>
       <div class="summary-row"><span class="label">Server</span><span>${selectedServer.name}</span></div>
@@ -301,17 +299,14 @@
       ${selectedPeriod.discount > 0 ? `<div class="summary-row"><span class="label">Sleva</span><span style="color:var(--success);">−${selectedPeriod.discount}&nbsp;%</span></div>` : ''}
       <div class="summary-row total"><span>Celkem</span><span>${formatPrice(total)} Kč</span></div>
     `;
-
     showScreen('checkout');
   }
 
   function goToPayment() {
     showScreen('payment-pending');
-
     setTimeout(() => {
       const discounted = Math.round(selectedServer.price * (1 - selectedPeriod.discount / 100));
       const total = discounted * selectedPeriod.months;
-
       document.getElementById('confirmed-details').innerHTML = `
         <div class="summary-row"><span class="label">Server</span><span>${selectedServer.name}</span></div>
         <div class="summary-row"><span class="label">Délka</span><span>${selectedPeriod.months} měs.</span></div>
@@ -319,20 +314,17 @@
         <div class="summary-row"><span class="label">Aktivace</span><span>do 30 minut</span></div>
         <div class="summary-row"><span class="label">Přístupy</span><span>email do 30 min</span></div>
       `;
-
       showScreen('order-confirmed');
     }, 2400);
   }
 
   // ---------------------------------------------------------------------------
-  // PORTAL: TABS
+  // PORTAL
   // ---------------------------------------------------------------------------
   function switchTab(tabId) {
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-
     document.getElementById(tabId).classList.add('active');
-
     const tabs = ['tab-overview', 'tab-access', 'tab-hardware', 'tab-actions'];
     const index = tabs.indexOf(tabId);
     if (index >= 0) {
@@ -340,9 +332,6 @@
     }
   }
 
-  // ---------------------------------------------------------------------------
-  // PORTAL: ACTIONS
-  // ---------------------------------------------------------------------------
   function copySSH() {
     const cmd = document.getElementById('ssh-cmd').textContent;
     if (navigator.clipboard) navigator.clipboard.writeText(cmd).catch(() => {});
@@ -355,30 +344,21 @@
   function togglePassword() {
     const input = document.getElementById('root-password');
     const btn = input.nextElementSibling;
-    if (input.type === 'password') {
-      input.type = 'text';
-      btn.textContent = 'Skrýt';
-    } else {
-      input.type = 'password';
-      btn.textContent = 'Zobrazit';
-    }
+    if (input.type === 'password') { input.type = 'text'; btn.textContent = 'Skrýt'; }
+    else { input.type = 'password'; btn.textContent = 'Zobrazit'; }
   }
 
   function showRebootConfirm() {
     document.getElementById('reboot-confirm').classList.add('show');
     document.getElementById('reboot-msg').classList.remove('show');
   }
-
   function hideRebootConfirm() {
     document.getElementById('reboot-confirm').classList.remove('show');
   }
-
   function confirmReboot() {
     document.getElementById('reboot-confirm').classList.remove('show');
     document.getElementById('reboot-msg').classList.add('show');
-    setTimeout(() => {
-      document.getElementById('reboot-msg').classList.remove('show');
-    }, 5000);
+    setTimeout(() => document.getElementById('reboot-msg').classList.remove('show'), 5000);
   }
 
   // ---------------------------------------------------------------------------
@@ -389,33 +369,99 @@
   }
 
   // ---------------------------------------------------------------------------
-  // EXPOSE — onclick handlers v HTML
+  // EXPORT
   // ---------------------------------------------------------------------------
-  window.NH = {
-    showScreen,
-    showPortal,
-    logout,
-    toggleTheme,
-    selectServer,
-    selectPeriod,
-    goToCheckout,
-    goToPayment,
-    switchTab,
-    copySSH,
-    togglePassword,
-    showRebootConfirm,
-    hideRebootConfirm,
-    confirmReboot
+
+
+  // ---------------------------------------------------------------------------
+  // HERO CAROUSEL
+  // ---------------------------------------------------------------------------
+  let carouselIndex = 0;
+  let carouselTimer = null;
+  const CAROUSEL_INTERVAL = 6000;
+
+  function carouselGoto(i) {
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.hero-dot');
+    if (!slides.length) return;
+    carouselIndex = ((i % slides.length) + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === carouselIndex));
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === carouselIndex));
+  }
+
+  function carouselNext() { carouselGoto(carouselIndex + 1); }
+  function carouselPrev() { carouselGoto(carouselIndex - 1); }
+
+  function carouselStart() {
+    if (carouselTimer) clearInterval(carouselTimer);
+    carouselTimer = setInterval(carouselNext, CAROUSEL_INTERVAL);
+  }
+
+  function initCarousel() {
+    const track = document.querySelector('.hero-carousel-track');
+    if (!track) return;
+    carouselGoto(0);
+    carouselStart();
+    // Pause na hover
+    const wrap = document.querySelector('.hero-carousel');
+    if (wrap) {
+      wrap.addEventListener('mouseenter', () => clearInterval(carouselTimer));
+      wrap.addEventListener('mouseleave', carouselStart);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // DEVICE INDICATOR
+  // ---------------------------------------------------------------------------
+  function updateDeviceIndicator() {
+    const el = document.getElementById('device-indicator');
+    if (!el) return;
+    const w = window.innerWidth;
+    if (w < 720) {
+      el.dataset.device = 'mobile';
+      el.textContent = '📱';
+      el.title = 'Mobil';
+    } else if (w < 1024) {
+      el.dataset.device = 'tablet';
+      el.textContent = '▭';
+      el.title = 'Tablet';
+    } else {
+      el.dataset.device = 'desktop';
+      el.textContent = '🖥';
+      el.title = 'Desktop';
+    }
+  }
+
+  function initDeviceIndicator() {
+    updateDeviceIndicator();
+    window.addEventListener('resize', updateDeviceIndicator);
+  }
+
+    window.NH = {
+    showScreen, showPortal, logout,
+    setMode, setBrand, setLang, togglePicker,
+    carouselGoto, carouselNext, carouselPrev,
+    selectServer, selectPeriod, goToCheckout, goToPayment,
+    switchTab, copySSH, togglePassword,
+    showRebootConfirm, hideRebootConfirm, confirmReboot
   };
 
   // ---------------------------------------------------------------------------
   // INIT
   // ---------------------------------------------------------------------------
   initTheme();
+  initLang();
+
+  function bootDOM() {
+    renderCatalog();
+    initPickers();
+    initCarousel();
+    initDeviceIndicator();
+  }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', renderCatalog);
+    document.addEventListener('DOMContentLoaded', bootDOM);
   } else {
-    renderCatalog();
+    bootDOM();
   }
 })();

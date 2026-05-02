@@ -39,7 +39,37 @@
         <li><a href="#faq" onclick="window.NH.showScreen('landing'); return true;">FAQ</a></li>
       </ul>
       <div class="navbar-actions">
-        <button class="theme-toggle" onclick="window.NH.toggleTheme()" title="Přepnout motiv" aria-label="Přepnout motiv">◐</button>
+        <!-- Device indicator -->
+        <div class="device-indicator" id="device-indicator" title="Zařízení">🖥</div>
+
+        <!-- Language picker -->
+        <div class="picker" id="picker-lang">
+          <button class="picker-btn" onclick="window.NH.togglePicker('picker-lang')" aria-label="Změnit jazyk" title="Jazyk">
+            <span data-lang-label>CS</span>
+          </button>
+          <div class="picker-menu">
+            <div class="picker-section-label">Jazyk</div>
+            <button class="picker-item" data-lang="cs" onclick="window.NH.setLang('cs')"><span class="picker-item-swatch swatch-cs"></span> Čeština</button>
+            <button class="picker-item" data-lang="en" onclick="window.NH.setLang('en')"><span class="picker-item-swatch swatch-en"></span> English</button>
+            <button class="picker-item" data-lang="de" onclick="window.NH.setLang('de')"><span class="picker-item-swatch swatch-de"></span> Deutsch</button>
+          </div>
+        </div>
+
+        <!-- Theme picker -->
+        <div class="picker" id="picker-theme">
+          <button class="picker-btn" onclick="window.NH.togglePicker('picker-theme')" aria-label="Změnit motiv" title="Motiv">◐</button>
+          <div class="picker-menu">
+            <div class="picker-section-label">Režim</div>
+            <button class="picker-item" data-theme-mode="light" onclick="window.NH.setMode('light')"><span class="picker-item-swatch swatch-light"></span> Světlý</button>
+            <button class="picker-item" data-theme-mode="dark" onclick="window.NH.setMode('dark')"><span class="picker-item-swatch swatch-dark"></span> Tmavý</button>
+            <div class="picker-divider"></div>
+            <div class="picker-section-label">Barva</div>
+            <button class="picker-item" data-theme-brand="blue" onclick="window.NH.setBrand('blue')"><span class="picker-item-swatch swatch-blue"></span> Modrá</button>
+            <button class="picker-item" data-theme-brand="green" onclick="window.NH.setBrand('green')"><span class="picker-item-swatch swatch-green"></span> Zelená</button>
+            <button class="picker-item" data-theme-brand="purple" onclick="window.NH.setBrand('purple')"><span class="picker-item-swatch swatch-purple"></span> Fialová</button>
+          </div>
+        </div>
+
         <button class="btn btn-outline btn-sm" onclick="window.NH.showPortal('portal-dashboard')">Přihlásit se</button>
       </div>
     </div>
@@ -50,22 +80,90 @@
        ========================================================================= -->
   <section id="screen-landing" class="screen active">
 
-    <!-- Hero (full-width section) -->
-    <div class="hero">
-      <div class="container">
-        <div class="hero-badge">Lokace Frankfurt DE nyní dostupná</div>
-        <h1>Dedikované servery<br>pro <span>náročné projekty</span></h1>
-        <p class="lead">Bare-metal výkon bez sdílení. Plný root přístup, vlastní IP adresy, ECC RAM a IPMI v ceně. Aktivace do 30 minut od platby, garantovaná dostupnost 99,9 %.</p>
+    <!-- Hero CAROUSEL (rotující tabule) -->
+    <div class="hero-carousel">
+      <button class="hero-arrow prev" onclick="window.NH.carouselPrev()" aria-label="Předchozí">‹</button>
+      <button class="hero-arrow next" onclick="window.NH.carouselNext()" aria-label="Další">›</button>
 
-        <div class="hero-actions">
-          <button class="btn btn-primary hero-cta" onclick="window.NH.showScreen('catalog')">Prohlédnout servery →</button>
-          <a class="btn btn-outline hero-cta" href="#how-it-works">Jak to funguje</a>
+      <div class="container">
+        <div class="hero-carousel-track">
+          <!-- Slide 1: Dedikované servery -->
+          <div class="hero-slide active">
+            <div class="hero-slide-inner">
+              <div class="hero-slide-content">
+                <span class="hero-slide-tagline">Dedikované servery</span>
+                <h2>Bare-metal výkon<br>bez <span>kompromisů</span></h2>
+                <p>Plný root, ECC RAM a IPMI v ceně. 5 konfigurací od 1 990 Kč/měs. Aktivace do 30 minut po platbě.</p>
+                <div class="hero-slide-actions">
+                  <button class="btn btn-primary hero-cta" onclick="window.NH.showScreen('catalog')">Prohlédnout servery →</button>
+                  <a class="btn btn-outline hero-cta" href="#how-it-works">Jak to funguje</a>
+                </div>
+              </div>
+              <div class="hero-slide-visual">
+                <span class="hero-slide-icon">⛁</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2: Akce — sleva při ročním placení -->
+          <div class="hero-slide">
+            <div class="hero-slide-inner">
+              <div class="hero-slide-content">
+                <span class="hero-slide-tagline">Akce na rok</span>
+                <h2>Roční pronájem se <span>slevou 15 %</span></h2>
+                <p>Při zaplacení dvanácti měsíců dopředu ušetříte 15 % a získáte garanci ceny po celou dobu pronájmu.</p>
+                <div class="hero-slide-actions">
+                  <button class="btn btn-primary hero-cta" onclick="window.NH.showScreen('catalog')">Vybrat konfiguraci →</button>
+                </div>
+              </div>
+              <div class="hero-slide-visual">
+                <span class="hero-slide-icon">%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3: Frankfurt DE -->
+          <div class="hero-slide">
+            <div class="hero-slide-inner">
+              <div class="hero-slide-content">
+                <span class="hero-slide-tagline">Nová lokace</span>
+                <h2>Frankfurt DE — <span>nyní dostupný</span></h2>
+                <p>Druhá lokace pro evropskou latenci. Equinix FR5, Tier III+, peering DE-CIX a AMS-IX. Ideální pro DACH a širší Evropu.</p>
+                <div class="hero-slide-actions">
+                  <button class="btn btn-primary hero-cta" onclick="window.NH.showScreen('catalog')">Prohlédnout servery →</button>
+                  <a class="btn btn-outline hero-cta" href="#datacenters">O datových centrech</a>
+                </div>
+              </div>
+              <div class="hero-slide-visual">
+                <span class="hero-slide-icon">⌖</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 4: Plná automatizace -->
+          <div class="hero-slide">
+            <div class="hero-slide-inner">
+              <div class="hero-slide-content">
+                <span class="hero-slide-tagline">Bez čekání</span>
+                <h2>Aktivace serveru za <span>30 minut</span></h2>
+                <p>Plně automatický provisioning. Po platbě dostanete IP, SSH přístup a IPMI URL. Nemusíte čekat na lidský zásah.</p>
+                <div class="hero-slide-actions">
+                  <button class="btn btn-primary hero-cta" onclick="window.NH.showScreen('catalog')">Začít teď →</button>
+                </div>
+              </div>
+              <div class="hero-slide-visual">
+                <span class="hero-slide-icon">⚡</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="hero-terminal">
-          <span class="prompt">$</span>
-          <span>ssh root@your-server.nordhost.cz</span>
-          <span class="cursor"></span>
+        <!-- Dots -->
+        <div class="hero-dots">
+          <button class="hero-dot active" onclick="window.NH.carouselGoto(0)" aria-label="Slide 1"></button>
+          <button class="hero-dot" onclick="window.NH.carouselGoto(1)" aria-label="Slide 2"></button>
+          <button class="hero-dot" onclick="window.NH.carouselGoto(2)" aria-label="Slide 3"></button>
+          <button class="hero-dot" onclick="window.NH.carouselGoto(3)" aria-label="Slide 4"></button>
         </div>
       </div>
     </div>
@@ -88,6 +186,152 @@
         <div class="trust-item">
           <div class="trust-item-value">24/7</div>
           <div class="trust-item-label">Český support</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top 3 — nejprodávanější konfigurace -->
+    <div class="container content-section">
+      <div class="section-header">
+        <div class="eyebrow">Nejprodávanější</div>
+        <h2 class="section-title">Top 3 konfigurace</h2>
+        <p class="section-subtitle">Nejčastější volba našich zákazníků. Stačí kliknout, nakonfigurovat období a server běží do 30 minut.</p>
+      </div>
+
+      <div class="top3-grid">
+        <!-- DS-ENTRY -->
+        <div class="top3-card">
+          <div class="top3-name">DS-ENTRY</div>
+          <div class="top3-tagline">Webhosting, VPN, menší projekty</div>
+          <div class="top3-price">
+            <span class="top3-price-amount">1 990</span>
+            <span class="top3-price-period">Kč / měs.</span>
+          </div>
+          <div class="top3-vat-note">bez DPH, fakturace měsíčně</div>
+          <ul class="top3-features">
+            <li>Intel Xeon E-2236 — 6C / 12T</li>
+            <li>32 GB DDR4 ECC</li>
+            <li>2× 512 GB NVMe SSD</li>
+            <li>1 Gbps unmetered, 1× IPv4</li>
+            <li>IPMI v ceně, plný root</li>
+            <li>Lokace Praha, CZ</li>
+          </ul>
+          <button class="btn btn-outline" style="width:100%;" onclick="window.NH.selectServer('ds-entry')">Vybrat DS-ENTRY</button>
+        </div>
+
+        <!-- DS-PRO (Featured) -->
+        <div class="top3-card featured">
+          <span class="top3-featured-badge">Doporučeno</span>
+          <div class="top3-name">DS-PRO</div>
+          <div class="top3-tagline">Produkční nasazení a databáze</div>
+          <div class="top3-price">
+            <span class="top3-price-amount">3 490</span>
+            <span class="top3-price-period">Kč / měs.</span>
+          </div>
+          <div class="top3-vat-note">bez DPH, fakturace měsíčně</div>
+          <ul class="top3-features">
+            <li>Intel Xeon E-2388G — 8C / 16T</li>
+            <li>64 GB DDR4 ECC 3200 MHz</li>
+            <li>2× 1 TB NVMe SSD (RAID 1)</li>
+            <li>1 Gbps unmetered, 2× IPv4</li>
+            <li>IPMI, plný root, /64 IPv6</li>
+            <li>Lokace Praha, CZ</li>
+          </ul>
+          <button class="btn btn-primary" style="width:100%;" onclick="window.NH.selectServer('ds-pro')">Vybrat DS-PRO</button>
+        </div>
+
+        <!-- DS-POWER -->
+        <div class="top3-card">
+          <div class="top3-name">DS-POWER</div>
+          <div class="top3-tagline">HPC, rendering, large-scale</div>
+          <div class="top3-price">
+            <span class="top3-price-amount">7 990</span>
+            <span class="top3-price-period">Kč / měs.</span>
+          </div>
+          <div class="top3-vat-note">bez DPH, fakturace měsíčně</div>
+          <ul class="top3-features">
+            <li>AMD EPYC 7443P — 24C / 48T</li>
+            <li>128 GB DDR4 ECC 3200 MHz</li>
+            <li>2× 2 TB NVMe (RAID 1)</li>
+            <li>10 Gbps unmetered, 4× IPv4</li>
+            <li>IPMI, plný root, /48 IPv6</li>
+            <li>Lokace Frankfurt, DE</li>
+          </ul>
+          <button class="btn btn-outline" style="width:100%;" onclick="window.NH.selectServer('ds-power')">Vybrat DS-POWER</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Naše služby — produktový přehled -->
+    <div class="container content-section" id="services">
+      <div class="section-header">
+        <div class="eyebrow">Naše služby</div>
+        <h2 class="section-title">Vše pro váš online provoz</h2>
+        <p class="section-subtitle">Od výkonných dedikovaných serverů přes virtuální stroje a úložiště až po e-mail a domény. Šetříme vaši energii — vše pod jednou střechou.</p>
+      </div>
+
+      <div class="services-grid">
+        <a class="service-card active" onclick="window.NH.showScreen('catalog'); return false;" href="#" tabindex="0">
+          <div class="service-icon">⛁</div>
+          <h3>Dedikované servery</h3>
+          <p>Bare-metal výkon bez sdílení. Plný root, ECC RAM, IPMI v ceně. 5 konfigurací od 1 990 Kč/měs.</p>
+          <div class="service-card-foot"><span>Prohlédnout →</span></div>
+        </a>
+
+        <div class="service-card coming">
+          <span class="coming-soon-badge">Připravujeme</span>
+          <div class="service-icon">▦</div>
+          <h3>VPS — dedikovaný výkon</h3>
+          <p>Virtuální server s 100 % vyhrazeným CPU a RAM. Bez „noisy neighbor" efektu, předvídatelný výkon.</p>
+          <div class="service-card-foot"><span>Brzy v nabídce</span></div>
+        </div>
+
+        <div class="service-card coming">
+          <span class="coming-soon-badge">Připravujeme</span>
+          <div class="service-icon">▥</div>
+          <h3>VPS klasický</h3>
+          <p>Cenově dostupný virtuální server pro standardní zátěž. Ideální pro testovací prostředí a menší aplikace.</p>
+          <div class="service-card-foot"><span>Brzy v nabídce</span></div>
+        </div>
+
+        <div class="service-card coming">
+          <span class="coming-soon-badge">Připravujeme</span>
+          <div class="service-icon">◫</div>
+          <h3>Datové úložiště</h3>
+          <p>Velkokapacitní storage pro zálohy, archivaci a sdílení. S3-kompatibilní API i klasický NFS přístup.</p>
+          <div class="service-card-foot"><span>Brzy v nabídce</span></div>
+        </div>
+
+        <div class="service-card coming">
+          <span class="coming-soon-badge">Připravujeme</span>
+          <div class="service-icon">☁</div>
+          <h3>Cloud</h3>
+          <p>Managed cloud platforma s autoscaling a load balancery. Pro produkční webové aplikace a microservices.</p>
+          <div class="service-card-foot"><span>Brzy v nabídce</span></div>
+        </div>
+
+        <div class="service-card coming">
+          <span class="coming-soon-badge">Připravujeme</span>
+          <div class="service-icon">✉</div>
+          <h3>E-mail</h3>
+          <p>Profesionální e-mailové schránky na vaší doméně. IMAP, SMTP, antispam, kalendář a kontakty.</p>
+          <div class="service-card-foot"><span>Brzy v nabídce</span></div>
+        </div>
+
+        <div class="service-card coming">
+          <span class="coming-soon-badge">Připravujeme</span>
+          <div class="service-icon">⌘</div>
+          <h3>Domény</h3>
+          <p>Registrace a správa domén všech TLD. Centrální správa DNS, automatické obnovy, ochrana WHOIS.</p>
+          <div class="service-card-foot"><span>Brzy v nabídce</span></div>
+        </div>
+
+        <div class="service-card coming">
+          <span class="coming-soon-badge">Připravujeme</span>
+          <div class="service-icon">⚛</div>
+          <h3>AI / GPU služby</h3>
+          <p>Pronájem GPU pro inferenci a trénink ML modelů. NVIDIA A4000/A100, hodinová tarifikace.</p>
+          <div class="service-card-foot"><span>Brzy v nabídce</span></div>
         </div>
       </div>
     </div>
@@ -303,7 +547,8 @@
         <div class="footer-grid">
           <div>
             <div class="navbar-logo" style="cursor:default;">Nord<span>Host</span></div>
-            <p class="footer-brand-text">Dedikované servery pro náročné projekty. Provozováno v Praze a Frankfurtu.</p>
+            <p class="footer-brand-text">Dedikované servery pro náročné projekty. Sídlo v Mladé Boleslavi, datová centra v Praze a Frankfurtu.</p>
+            <p class="footer-brand-text" style="font-size: 12px; margin-top: 8px;"><strong style="color: var(--text-secondary);">Sídlo:</strong> Mladá Boleslav, ČR</p>
           </div>
           <div class="footer-col">
             <h4>Produkt</h4>
